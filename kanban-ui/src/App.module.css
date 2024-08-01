@@ -1,0 +1,43 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background-color: rgb(20, 20, 20);
+}
+
+.kanbanBoard {
+  min-height: 94vh;
+  width: 98vw;
+  border-radius: 10px;
+  position: relative;
+  overflow: hidden;
+  margin-top: 2vh;
+}
+
+.kanbanTabs {
+  height: 100px;
+  width: 100%;
+  background-color: rgb(20, 20, 20);
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 40px;
+}
+
+.tab {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px 10px 0 0;
+  cursor: pointer;
+}
+
+.kanbanContent {
+  margin: 16px;
+  background-color: aliceblue;
+  background-color: transparent;
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 8px;
+}

@@ -1,0 +1,42 @@
+.container {
+  border-radius: 10px;
+  background-color: rgb(180, 180, 180);
+  padding: 8px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.text {
+  color: rgb(30, 30, 30);
+}
+
+.mainSection {
+  display: flex;
+}
+
+.ticketNumber {
+  color: rgb(30, 30, 30);
+  margin-right: 32px;
+}
+
+.button {
+  padding: 10px;
+  background-color: rgb(30, 30, 30);
+  border: none;
+  outline: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 0.1s ease;
+}
+
+.button:active {
+  background-color: rgb(60, 60, 60);
+}
+
+.buttonContainer {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+}

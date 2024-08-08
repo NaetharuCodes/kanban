@@ -8,6 +8,7 @@
   font-weight: bold;
   font-size: 1.08rem;
   transition: 0.1s ease;
+  cursor: pointer;
 }
 
 .primary {

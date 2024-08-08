@@ -1,0 +1,51 @@
+.container {
+  width: 350px;
+}
+
+.button {
+  padding: 8px 16px;
+  width: 100%;
+  background: white;
+  outline: nonel;
+  border: 1px solid rgba(var(--blue-gray), 1);
+  border-radius: 4px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  position: relative;
+}
+
+.buttonOpen {
+  border: 1px solid rgba(var(--purple), 1);
+}
+
+.optionsBox {
+  margin-top: 8px;
+  background-color: white;
+  border-radius: 8px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  position: absolute;
+  width: 100%;
+  left: 0;
+  right: 0;
+  top: 100%;
+}
+
+.optionsBox div {
+  color: rgba(var(--blue-gray), 1);
+  cursor: pointer;
+
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 4px 0;
+}
+
+.optionsBox div:hover {
+  color: rgba(var(--blue-gray), 0.5);
+}

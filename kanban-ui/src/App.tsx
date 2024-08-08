@@ -1,8 +1,16 @@
+import { useState } from "react";
 import CheckBox from "./components/CheckBox/CheckBox";
+import DropDown from "./components/DownDown/DropDown";
 import MainButton from "./components/MainButton/MainButton";
 import TextField from "./components/TextField/TextField";
 
 const App = () => {
+  const [dropDownValue, setDropDownValue] = useState<string>("");
+
+  const handleSetDropDown = (value: string) => {
+    setDropDownValue(value);
+  };
+
   return (
     <div className="heading-xl">
       <h1 className="heading-xl">Heading XL</h1>
@@ -64,6 +72,11 @@ const App = () => {
           placeholder="This is some placeholder text"
           error
           errorMessage="Can't be empty"
+        />
+        <DropDown
+          values={["Fries", "burgers"]}
+          value={dropDownValue}
+          setValue={handleSetDropDown}
         />
       </div>
     </div>

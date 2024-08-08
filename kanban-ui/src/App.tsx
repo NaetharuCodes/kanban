@@ -1,5 +1,6 @@
 import CheckBox from "./components/CheckBox/CheckBox";
 import MainButton from "./components/MainButton/MainButton";
+import TextField from "./components/TextField/TextField";
 
 const App = () => {
   return (
@@ -54,6 +55,15 @@ const App = () => {
           taskId="0001"
           checked={false}
           onChange={() => {}}
+        />
+        <TextField
+          placeholder="This is some placeholder text"
+          errorMessage="Can't be empty"
+        />
+        <TextField
+          placeholder="This is some placeholder text"
+          error
+          errorMessage="Can't be empty"
         />
       </div>
     </div>

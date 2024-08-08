@@ -1,0 +1,23 @@
+.container {
+  width: 350px;
+  position: relative;
+}
+
+.input {
+  padding: 8px 16px;
+  border-radius: 4px;
+  border: 1px solid rgba(var(--blue-gray), 0.25);
+  width: 100%;
+}
+
+.error {
+  border: 1px solid rgba(var(--red), 1);
+}
+
+.errorMessage {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 16px;
+  color: rgba(var(--red), 1);
+}

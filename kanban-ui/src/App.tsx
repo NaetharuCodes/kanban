@@ -1,70 +1,47 @@
-import { useState } from "react";
-import styles from "./App.module.css";
-import KanBanItem from "./components/KanBanItem/KanBanItem";
-import data from "./data/data.json";
-
-enum Page {
-  PROPOSED = "Proposed",
-  ACTIVE = "Active",
-  REVIEW = "Review",
-  COMPLETE = "Complete",
-}
+import MainButton from "./components/MainButton/MainButton";
 
 const App = () => {
-  const [page, setPage] = useState<Page>(Page.ACTIVE);
-
-  const handleChangePage = (targetPage: Page) => {
-    setPage(targetPage);
-  };
-
   return (
-    <div className={styles.container}>
+    <div className="heading-xl">
+      <h1 className="heading-xl">Heading XL</h1>
+      <h2 className="heading-lg">Heading L</h2>
+      <h3 className="heading-md">Heading M</h3>
+      <h4 className="heading-sm">Heading S</h4>
+      <p className="text-lg">
+        This is some large body text that we are testing
+      </p>
+      <p className="text-md">
+        This is some medium body text that we are testing
+      </p>
       <div
-        className={`${styles.kanbanBoard} ${
-          page === Page.PROPOSED
-            ? "bg-proposed"
-            : page === Page.ACTIVE
-            ? "bg-active"
-            : page === Page.REVIEW
-            ? "bg-review"
-            : "bg-complete"
-        }`}
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          gap: "10px",
+          margin: "10px",
+        }}
       >
-        <div className={styles.kanbanTabs}>
-          <div
-            role="button"
-            onClick={() => handleChangePage(Page.PROPOSED)}
-            className={`${styles.tab} bg-proposed`}
-          >
-            Proposed
-          </div>
-          <div
-            role="button"
-            onClick={() => handleChangePage(Page.ACTIVE)}
-            className={`${styles.tab} bg-active`}
-          >
-            Active
-          </div>
-          <div
-            role="button"
-            onClick={() => handleChangePage(Page.REVIEW)}
-            className={`${styles.tab} bg-review`}
-          >
-            Review
-          </div>
-          <div
-            role="button"
-            onClick={() => handleChangePage(Page.COMPLETE)}
-            className={`${styles.tab} bg-complete`}
-          >
-            Complete
-          </div>
-        </div>
-        <div className={styles.kanbanContent}>
-          {data.tickets.map((ticket) => (
-            <KanBanItem ticketNumber={ticket.number} text={ticket.text} />
-          ))}
-        </div>
+        <MainButton
+          text="Button Primary (LG)"
+          onClick={() => console.log("you click me")}
+          type="primary"
+          large
+        />
+        <MainButton
+          text="Button Primary"
+          onClick={() => console.log("you click me")}
+          type="primary"
+        />
+        <MainButton
+          text="Button Secondary"
+          onClick={() => console.log("you click me")}
+          type="secondary"
+        />
+        <MainButton
+          text="Button Destructive"
+          onClick={() => console.log("you click me")}
+          type="destructive"
+        />
       </div>
     </div>
   );

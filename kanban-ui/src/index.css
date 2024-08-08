@@ -2,33 +2,58 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  font-size: 20px;
-  font-family: "Rubik", sans-serif;
-  color: rgb(220, 220, 220);
+  font-size: 12px;
+  font-family: "Plus Jakarta Sans", sans-serif;
+  color: black;
 }
 
 :root {
-  --proposed: rgb(60, 40, 40);
-  --active: rgb(40, 60, 40);
-  --review: rgb(40, 40, 60);
-  --complete: rgb(50, 50, 50);
+  --purple: 99, 95, 199; /* #635fc7 */
+  --violet: 168, 164, 255; /* #a8a4ff */
+  --black: 0, 1, 18; /* #000112 */
+  --charcoal: 32, 33, 44; /* #20212c */
+  --dark-gray: 43, 44, 55; /* #2b2c37 */
+  --mid-gray: 62, 63, 78; /* #3e3f4e */
+  --blue-gray: 130, 143, 163; /* #828fa3 */
+  --light-gray: 228, 235, 250; /* #e4ebfa */
+  --light-blue: 244, 247, 253; /* #f4f7fd */
+  --red: 234, 85, 85; /* #ea5555 */
+  --pink: 255, 152, 152; /* #ff9898 */
 }
 
-.kanbanBoard {
+.heading-xl {
+  font-weight: bold;
+  font-size: 2rem;
+  line-height: 1.25;
 }
 
-.bg-proposed {
-  background-color: var(--proposed);
+.heading-lg {
+  font-weight: bold;
+  font-size: 1.5rem;
+  line-height: 1.27;
 }
 
-.bg-active {
-  background-color: var(--active);
+.heading-md {
+  font-weight: bold;
+  font-size: 1.25rem;
+  line-height: 1.27;
 }
 
-.bg-review {
-  background-color: var(--review);
+.heading-sm {
+  font-weight: bold;
+  font-size: 1rem;
+  line-height: 1.25;
+  letter-spacing: 0.33rem;
 }
 
-.bg-complete {
-  background-color: var(--complete);
+.text-lg {
+  font-weight: normal;
+  font-size: 1.08rem;
+  line-height: 1.78rem;
+}
+
+.text-md {
+  font-weight: bold;
+  font-size: 1rem;
+  line-height: 1.25;
 }

@@ -1,0 +1,45 @@
+.container {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  background-color: rgba(var(--light-blue), 1);
+  padding: 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  max-width: 350px;
+}
+
+.container:hover {
+  background-color: rgba(var(--purple), 0.25);
+}
+
+.input {
+  display: none;
+}
+
+.label {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  cursor: pointer;
+}
+
+.checkedLabel {
+  text-decoration: line-through;
+  color: rgba(var(--blue-gray), 1);
+}
+
+.customCheckBox {
+  background-color: white;
+  height: 16px;
+  width: 16px;
+  margin-right: 16px;
+  border-radius: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.checked {
+  background-color: rgba(var(--purple), 1);
+}

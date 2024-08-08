@@ -1,3 +1,4 @@
+import CheckBox from "./components/CheckBox/CheckBox";
 import MainButton from "./components/MainButton/MainButton";
 
 const App = () => {
@@ -41,6 +42,18 @@ const App = () => {
           text="Button Destructive"
           onClick={() => console.log("you click me")}
           type="destructive"
+        />
+        <CheckBox
+          label="Task 1"
+          taskId="0001"
+          checked={true}
+          onChange={() => {}}
+        />
+        <CheckBox
+          label="Task 1"
+          taskId="0001"
+          checked={false}
+          onChange={() => {}}
         />
       </div>
     </div>

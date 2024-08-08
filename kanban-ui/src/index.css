@@ -7,6 +7,10 @@
   color: black;
 }
 
+body.dark-mode * {
+  color: white;
+}
+
 :root {
   --purple: 99, 95, 199; /* #635fc7 */
   --violet: 168, 164, 255; /* #a8a4ff */

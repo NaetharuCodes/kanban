@@ -8,6 +8,12 @@
   border-radius: 4px;
   border: 1px solid rgba(var(--blue-gray), 0.25);
   width: 100%;
+  background-color: white;
+  outline: none;
+}
+
+:global(body.dark-mode) .input {
+  background-color: rgba(var(--dark-gray), 1);
 }
 
 .error {
@@ -19,5 +25,9 @@
   top: 50%;
   transform: translateY(-50%);
   right: 16px;
+  color: rgba(var(--red), 1);
+}
+
+:global(body.dark-mode) .errorMessage {
   color: rgba(var(--red), 1);
 }

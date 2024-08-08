@@ -1,18 +1,30 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CheckBox from "./components/CheckBox/CheckBox";
 import DropDown from "./components/DownDown/DropDown";
 import MainButton from "./components/MainButton/MainButton";
 import TextField from "./components/TextField/TextField";
+import { useTheme } from "./context/ThemeContext";
+import styles from "./App.module.css";
 
 const App = () => {
   const [dropDownValue, setDropDownValue] = useState<string>("");
+
+  const { darkMode, toggleDarkMode } = useTheme();
+
+  useEffect(() => {
+    if (darkMode) {
+      document.body.classList.add("dark-mode");
+    } else {
+      document.body.classList.remove("dark-mode");
+    }
+  }, [darkMode]);
 
   const handleSetDropDown = (value: string) => {
     setDropDownValue(value);
   };
 
   return (
-    <div className="heading-xl">
+    <div className={styles.container}>
       <h1 className="heading-xl">Heading XL</h1>
       <h2 className="heading-lg">Heading L</h2>
       <h3 className="heading-md">Heading M</h3>
@@ -32,8 +44,8 @@ const App = () => {
         }}
       >
         <MainButton
-          text="Button Primary (LG)"
-          onClick={() => console.log("you click me")}
+          text="Tolggle Dark Mode"
+          onClick={toggleDarkMode}
           type="primary"
           large
         />

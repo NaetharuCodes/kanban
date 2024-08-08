@@ -1,0 +1,8 @@
+.container {
+  background-color: white;
+  min-height: 100svh;
+}
+
+:global(body.dark-mode) .container {
+  background-color: rgba(var(--dark-gray), 1);
+}

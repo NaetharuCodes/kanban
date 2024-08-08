@@ -7,9 +7,18 @@
   border-radius: 4px;
   cursor: pointer;
   max-width: 350px;
+  font-weight: bold;
 }
 
 .container:hover {
+  background-color: rgba(var(--purple), 0.25);
+}
+
+:global(body.dark-mode) .container {
+  background-color: rgba(var(--charcoal), 1);
+}
+
+:global(body.dark-mode) .container:hover {
   background-color: rgba(var(--purple), 0.25);
 }
 
@@ -29,6 +38,10 @@
   color: rgba(var(--blue-gray), 1);
 }
 
+:global(body.dark-mode) .checkedLabel {
+  color: rgba(var(--blue-gray), 1);
+}
+
 .customCheckBox {
   background-color: white;
   height: 16px;
@@ -40,6 +53,14 @@
   justify-content: center;
 }
 
+:global(body.dark-mode) .customCheckBox {
+  background-color: rgba(var(--dark-gray), 1);
+}
+
 .checked {
+  background-color: rgba(var(--purple), 1);
+}
+
+:global(body.dark-mode) .checked {
   background-color: rgba(var(--purple), 1);
 }

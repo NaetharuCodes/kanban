@@ -16,7 +16,16 @@
   position: relative;
 }
 
+:global(body.dark-mode) .button {
+  background-color: rbga(var(--dark-gray));
+  border: 1px solid rgba(var(--blue-gray), 0.25);
+}
+
 .buttonOpen {
+  border: 1px solid rgba(var(--purple), 1);
+}
+
+:global(body.dark-mode) .buttonOpen {
   border: 1px solid rgba(var(--purple), 1);
 }
 
@@ -35,10 +44,13 @@
   top: 100%;
 }
 
+:global(body.dark-mode) .optionsBox {
+  background-color: rgba(var(--charcoal));
+}
+
 .optionsBox div {
   color: rgba(var(--blue-gray), 1);
   cursor: pointer;
-
   width: 100%;
   display: flex;
   justify-content: flex-start;
@@ -46,6 +58,14 @@
   padding: 4px 0;
 }
 
+:global(body.dark-mode) .optionsBox div {
+  color: rgba(var(--blue-gray), 1);
+}
+
 .optionsBox div:hover {
   color: rgba(var(--blue-gray), 0.5);
+}
+
+:global(body.dark-mode) .optionsBox div:hover {
+  color: rgba(var(--blue-gray), 0.75);
 }

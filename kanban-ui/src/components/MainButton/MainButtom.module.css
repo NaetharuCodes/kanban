@@ -28,6 +28,16 @@
   background-color: rgba(var(--purple), 0.25);
 }
 
+:global(body.dark-mode) .secondary {
+  background-color: white;
+  color: rgba(var(--purple), 1);
+}
+
+:global(body.dark-mode) .secondary:hover {
+  background-color: rgba(var(--light-gray), 1);
+  color: rgba(var(--purple), 1);
+}
+
 .destructive {
   background-color: rgba(var(--red), 1);
 }

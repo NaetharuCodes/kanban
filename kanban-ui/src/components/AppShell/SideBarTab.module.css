@@ -12,11 +12,23 @@
   border: none;
 }
 
+:global(body.dark-mode) .container {
+  background-color: rgba(var(--dark-gray), 1);
+}
+
 .active {
   background-color: rgba(var(--purple), 1);
 }
 
+:global(body.dark-mode) .active {
+  background-color: rgba(var(--purple), 1);
+}
+
 .text {
+  color: rgba(var(--blue-gray), 1);
+}
+
+:global(body.dark-mode) .text {
   color: rgba(var(--blue-gray), 1);
 }
 

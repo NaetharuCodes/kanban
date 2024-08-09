@@ -9,6 +9,10 @@
   flex-direction: column;
 }
 
+:global(body.dark-mode) .container {
+  background-color: rgba(var(--charcoal), 1);
+}
+
 .header {
   background-color: white;
   display: flex;
@@ -19,6 +23,10 @@
   height: 80px;
 }
 
+:global(body.dark-mode) .header {
+  background-color: rgba(var(--dark-gray), 1);
+}
+
 .boardHeaderBtn {
   border: none;
   background-color: white;
@@ -27,6 +35,10 @@
   align-items: center;
   gap: 12px;
   cursor: pointer;
+}
+
+:global(body.dark-mode) .boardHeaderBtn {
+  background-color: rgba(var(--dark-gray));
 }
 
 .boardHeaderTitle {
@@ -65,6 +77,10 @@
 }
 
 @media only screen and (min-width: 760px) {
+  .header {
+    border-bottom: 1px solid rgba(var(--mid-gray));
+  }
+
   .brandText {
     display: block;
   }
@@ -79,13 +95,21 @@
     background-color: white;
   }
 
+  :global(body.dark-mode) .boardHeaderTitle {
+    background-color: rgba(var(--dark-gray));
+  }
+
   .brandContainer {
     display: flex;
     align-items: center;
     gap: 16px;
     width: 244px;
     border-right: 1px solid rgba(var(--light-gray));
-    padding: 28px 24px;
+    padding: 24px 24px;
+  }
+
+  :global(body.dark-mode) .brandContainer {
+    border-right: 1px solid rgba(var(--mid-gray));
   }
 
   .button {

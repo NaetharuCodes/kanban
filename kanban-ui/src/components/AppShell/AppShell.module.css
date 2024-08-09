@@ -17,6 +17,18 @@
   height: 80px;
 }
 
+.brandContainer {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  width: 244px;
+  border-right: 1px solid rgba(var(--light-gray));
+}
+
+.brandText {
+  display: none;
+}
+
 .button {
   background-color: rgba(var(--purple), 1);
   padding: 10px 18px;
@@ -26,6 +38,11 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  cursor: pointer;
+}
+
+.buttonText {
+  display: none;
 }
 
 .pipButton {
@@ -33,4 +50,32 @@
   border: none;
   display: flex;
   align-items: center;
+}
+
+@media only screen and (min-width: 680px) {
+  .brandText {
+    display: block;
+  }
+
+  .brandContainer {
+    padding: 28px 24px;
+  }
+
+  .button {
+    display: none;
+  }
+
+  .buttonText {
+    display: block;
+    background-color: rgba(var(--purple), 1);
+    padding: 10px 18px;
+    border: none;
+    outline: none;
+    border-radius: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    cursor: pointer;
+  }
 }

@@ -16,8 +16,8 @@
 }
 
 :global(body.dark-mode) .container {
-  background-color: rgba(var(--mid-gray), 1);
-  border-right: 1px solid rgba(var(--blue-gray), 1);
+  background-color: rgba(var(--dark-gray), 1);
+  border-right: 1px solid rgba(var(--mid-gray), 1);
 }
 
 .visible {
@@ -34,6 +34,10 @@
   color: rgba(var(--blue-gray), 1);
 }
 
+:global(body.dark-mode) .boardsNumber {
+  color: rgba(var(--blue-gray), 1);
+}
+
 .createNewButton {
   padding: 20px 24px;
   background-color: white;
@@ -45,7 +49,7 @@
 }
 
 :global(body.dark-mode) .createNewButton {
-  background-color: rgba(var(--mid-gray), 1);
+  background-color: rgba(var(--dark-gray), 1);
   color: rgba(var(--purple), 1);
 }
 
@@ -115,7 +119,7 @@
 }
 
 :global(body.dark-mode) .hideSidebarBtn {
-  background-color: rgba(var(--mid-gray));
+  background-color: rgba(var(--dark-gray));
   color: rgba(var(--blue-gray));
 }
 

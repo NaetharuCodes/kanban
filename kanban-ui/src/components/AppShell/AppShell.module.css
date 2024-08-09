@@ -24,7 +24,7 @@
 }
 
 :global(body.dark-mode) .header {
-  background-color: rgba(var(--mid-gray), 1);
+  background-color: rgba(var(--dark-gray), 1);
 }
 
 .boardHeaderBtn {
@@ -38,7 +38,7 @@
 }
 
 :global(body.dark-mode) .boardHeaderBtn {
-  background-color: rgba(var(--mid-gray));
+  background-color: rgba(var(--dark-gray));
 }
 
 .boardHeaderTitle {
@@ -78,7 +78,7 @@
 
 @media only screen and (min-width: 760px) {
   .header {
-    border-bottom: 1px solid rgba(var(--blue-gray));
+    border-bottom: 1px solid rgba(var(--mid-gray));
   }
 
   .brandText {
@@ -96,7 +96,7 @@
   }
 
   :global(body.dark-mode) .boardHeaderTitle {
-    background-color: rgba(var(--mid-gray));
+    background-color: rgba(var(--dark-gray));
   }
 
   .brandContainer {
@@ -109,7 +109,7 @@
   }
 
   :global(body.dark-mode) .brandContainer {
-    border-right: 1px solid rgba(var(--blue-gray));
+    border-right: 1px solid rgba(var(--mid-gray));
   }
 
   .button {

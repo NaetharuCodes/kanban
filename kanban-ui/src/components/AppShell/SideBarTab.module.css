@@ -13,7 +13,7 @@
 }
 
 :global(body.dark-mode) .container {
-  background-color: rgba(var(--mid-gray), 1);
+  background-color: rgba(var(--dark-gray), 1);
 }
 
 .active {
@@ -27,6 +27,7 @@
 .text {
   color: rgba(var(--blue-gray), 1);
 }
+
 :global(body.dark-mode) .text {
   color: rgba(var(--blue-gray), 1);
 }

@@ -17,6 +17,20 @@
   height: 80px;
 }
 
+.boardHeaderBtn {
+  border: none;
+  background-color: white;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+}
+
+.boardHeaderTitle {
+  display: none;
+}
+
 .brandText {
   display: none;
 }
@@ -47,6 +61,16 @@
 @media only screen and (min-width: 760px) {
   .brandText {
     display: block;
+  }
+
+  .boardHeaderBtn {
+    display: none;
+  }
+
+  .boardHeaderTitle {
+    display: block;
+    border: none;
+    background-color: white;
   }
 
   .brandContainer {

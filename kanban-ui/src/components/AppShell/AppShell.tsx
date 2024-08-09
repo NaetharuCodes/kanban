@@ -19,10 +19,12 @@ const AppShell = ({ children }: AppShellProps) => {
             <BrandIcon />
             <h1 className={`${styles.brandText} heading-xl`}>kanban</h1>
           </div>
-          <h2 className={`${styles.headerTitle} heading-lg`}>
-            Platform Launch
+          <button className={`${styles.boardHeaderBtn} heading-lg`}>
+            Title of Current Board <ChevronArrow />
+          </button>
+          <h2 className={`${styles.boardHeaderTitle} heading-lg`}>
+            Title of Current Board
           </h2>
-          <ChevronArrow />
         </div>
         <div className="flex-row">
           <button className={styles.button}>

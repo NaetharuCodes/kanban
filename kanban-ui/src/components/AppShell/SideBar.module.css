@@ -44,6 +44,11 @@
   gap: 12px;
 }
 
+:global(body.dark-mode) .createNewButton {
+  background-color: rgba(var(--mid-gray), 1);
+  color: rgba(var(--purple), 1);
+}
+
 .darkModeToggle {
   padding: 20px 24px;
   background-color: rgba(var(--light-gray), 1);
@@ -107,6 +112,11 @@
   gap: 10px;
   color: rgba(var(--blue-gray), 1);
   font-weight: bold;
+}
+
+:global(body.dark-mode) .hideSidebarBtn {
+  background-color: rgba(var(--mid-gray));
+  color: rgba(var(--blue-gray));
 }
 
 .openSidebar {

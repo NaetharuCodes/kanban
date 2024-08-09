@@ -37,6 +37,10 @@
   cursor: pointer;
 }
 
+:global(body.dark-mode) .boardHeaderBtn {
+  background-color: rgba(var(--mid-gray));
+}
+
 .boardHeaderTitle {
   display: none;
 }
@@ -74,7 +78,7 @@
 
 @media only screen and (min-width: 760px) {
   .header {
-    border-bottom: 1px solid rgba(var(--light-gray));
+    border-bottom: 1px solid rgba(var(--blue-gray));
   }
 
   .brandText {
@@ -89,6 +93,10 @@
     display: block;
     border: none;
     background-color: white;
+  }
+
+  :global(body.dark-mode) .boardHeaderTitle {
+    background-color: rgba(var(--mid-gray));
   }
 
   .brandContainer {

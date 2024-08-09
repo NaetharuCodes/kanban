@@ -1,0 +1,7 @@
+.container {
+  position: fixed;
+  min-height: 100vh;
+  width: 260px;
+  background-color: white;
+  border-right: 1px solid rgba(var(--light-gray), 1);
+}

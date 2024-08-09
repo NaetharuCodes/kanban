@@ -1,0 +1,17 @@
+.container {
+  background-color: rgba(var(--purple), 1);
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 16px;
+  padding: 14px 32px;
+  border-radius: 0 100px 100px 0;
+  width: 240px;
+  cursor: pointer;
+  outline: none;
+  border: none;
+}
+
+.text {
+  color: white;
+}

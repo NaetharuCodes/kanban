@@ -1,8 +1,10 @@
+import { useState } from "react";
 import BrandIcon from "../Icons/BrandIcon";
 import ChevronArrow from "../Icons/ChevronArrow";
 import PlusIcon from "../Icons/PlusIcon";
 import VerticalPipIcon from "../Icons/VerticalPipIcon";
 import styles from "./AppShell.module.css";
+import SideBar from "./SideBar";
 
 interface AppShellProps {
   children: React.ReactNode;
@@ -10,6 +12,8 @@ interface AppShellProps {
 }
 
 const AppShell = ({ children, sideBar }: AppShellProps) => {
+  const [openSideBar, setOpenSideBar] = useState<boolean>(true);
+
   return (
     <div className={styles.container}>
       <header className={styles.header}>
@@ -30,7 +34,7 @@ const AppShell = ({ children, sideBar }: AppShellProps) => {
           </button>
         </div>
       </header>
-      {sideBar && <div>Sidebar</div>}
+      {openSideBar && <SideBar />}
       <div>{children}</div>
     </div>
   );

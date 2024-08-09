@@ -1,6 +1,10 @@
 .container {
-  background-color: rgba(var(--light-gray), 1);
+  background-color: rgba(var(--light-blue), 1);
   min-height: 100svh;
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
 }
 
 .header {

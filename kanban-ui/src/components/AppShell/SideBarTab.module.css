@@ -1,5 +1,5 @@
 .container {
-  background-color: rgba(var(--purple), 1);
+  background-color: white;
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -12,6 +12,14 @@
   border: none;
 }
 
+.active {
+  background-color: rgba(var(--purple), 1);
+}
+
 .text {
+  color: rgba(var(--blue-gray), 1);
+}
+
+.container.active .text {
   color: white;
 }

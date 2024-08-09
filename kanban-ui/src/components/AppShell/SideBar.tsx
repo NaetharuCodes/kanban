@@ -7,7 +7,18 @@ const SideBar = () => {
       <SideBarTab
         title="My Board"
         onClick={(value: string) => console.log(value)}
-        value="test"
+        value="My Board"
+        active
+      />
+      <SideBarTab
+        title="My Board"
+        onClick={(value: string) => console.log(value)}
+        value="My Board"
+      />
+      <SideBarTab
+        title="My Board"
+        onClick={(value: string) => console.log(value)}
+        value="My Board"
       />
     </div>
   );

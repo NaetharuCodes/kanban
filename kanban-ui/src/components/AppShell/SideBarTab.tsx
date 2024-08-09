@@ -5,12 +5,17 @@ interface SideBarTabProps {
   title: string;
   onClick: (value: string) => void;
   value: string;
+  active?: boolean;
 }
 
-const SideBarTab = ({ title, onClick, value }: SideBarTabProps) => {
+const SideBarTab = ({ title, onClick, value, active }: SideBarTabProps) => {
   return (
-    <button className={styles.container} onClick={() => onClick(value)}>
-      <NewBoardIcon fillColor="white" />
+    <button
+      type="button"
+      className={`${styles.container} ${active && styles.active}`}
+      onClick={() => onClick(value)}
+    >
+      <NewBoardIcon fillColor={active ? "white" : "#828fa3"} />
       <div className={`${styles.text} heading-md`}>{title}</div>
     </button>
   );

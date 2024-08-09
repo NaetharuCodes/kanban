@@ -1,4 +1,3 @@
-import { useState } from "react";
 import BrandIcon from "../Icons/BrandIcon";
 import ChevronArrow from "../Icons/ChevronArrow";
 import PlusIcon from "../Icons/PlusIcon";
@@ -11,9 +10,7 @@ interface AppShellProps {
   sideBar?: boolean;
 }
 
-const AppShell = ({ children, sideBar }: AppShellProps) => {
-  const [openSideBar, setOpenSideBar] = useState<boolean>(true);
-
+const AppShell = ({ children }: AppShellProps) => {
   return (
     <div className={styles.container}>
       <header className={styles.header}>
@@ -39,7 +36,7 @@ const AppShell = ({ children, sideBar }: AppShellProps) => {
           </button>
         </div>
       </header>
-      {openSideBar && <SideBar />}
+      <SideBar />
       <div>{children}</div>
     </div>
   );

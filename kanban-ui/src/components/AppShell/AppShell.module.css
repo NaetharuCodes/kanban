@@ -62,7 +62,6 @@
 
 .main {
   flex-grow: 1;
-  transition: 0.2s ease;
 }
 
 @media only screen and (min-width: 760px) {
@@ -108,6 +107,7 @@
   }
 
   .main {
+    transition: 0.2s ease;
   }
 
   .shiftedMain {

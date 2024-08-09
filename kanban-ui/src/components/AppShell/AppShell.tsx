@@ -11,8 +11,12 @@ interface AppShellProps {
   sideBar?: boolean;
 }
 
-const AppShell = ({ children, sideBar }: AppShellProps) => {
-  const [openSideBar, setOpenSideBar] = useState<boolean>(true);
+const AppShell = ({ children }: AppShellProps) => {
+  const [showSidebar, setShowSidebar] = useState<boolean>(true);
+
+  const handleToggleSidebar = () => {
+    setShowSidebar(!showSidebar);
+  };
 
   return (
     <div className={styles.container}>
@@ -22,10 +26,12 @@ const AppShell = ({ children, sideBar }: AppShellProps) => {
             <BrandIcon />
             <h1 className={`${styles.brandText} heading-xl`}>kanban</h1>
           </div>
-          <h2 className={`${styles.headerTitle} heading-lg`}>
-            Platform Launch
+          <button className={`${styles.boardHeaderBtn} heading-lg`}>
+            Title of Current Board <ChevronArrow />
+          </button>
+          <h2 className={`${styles.boardHeaderTitle} heading-lg`}>
+            Title of Current Board
           </h2>
-          <ChevronArrow />
         </div>
         <div className="flex-row">
           <button className={styles.button}>
@@ -39,8 +45,13 @@ const AppShell = ({ children, sideBar }: AppShellProps) => {
           </button>
         </div>
       </header>
-      {openSideBar && <SideBar />}
-      <div>{children}</div>
+      <SideBar
+        toggleShowSideBar={handleToggleSidebar}
+        showSideBar={showSidebar}
+      />
+      <div className={`${styles.main} ${showSidebar && styles.shiftedMain}`}>
+        {children}
+      </div>
     </div>
   );
 };

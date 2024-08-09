@@ -25,6 +25,10 @@ body.dark-mode * {
   --pink: 255, 152, 152; /* #ff9898 */
 }
 
+button {
+  cursor: pointer;
+}
+
 .heading-xl {
   font-weight: bold;
   font-size: 2rem;

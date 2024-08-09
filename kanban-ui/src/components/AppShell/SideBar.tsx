@@ -10,13 +10,13 @@ import OpenEyeIcon from "../Icons/OpenEyeIcon";
 
 const numberOfBoards = 3;
 
-const SideBar = () => {
-  const { darkMode, toggleDarkMode } = useTheme();
-  const [showSidebar, setShowSidebar] = useState<boolean>(true);
+interface SideBarProps {
+  toggleShowSideBar: () => void;
+  showSideBar: boolean;
+}
 
-  const handleToggleSidebar = () => {
-    setShowSidebar(!showSidebar);
-  };
+const SideBar = ({ showSideBar, toggleShowSideBar }: SideBarProps) => {
+  const { darkMode, toggleDarkMode } = useTheme();
 
   useEffect(() => {
     if (darkMode) {
@@ -27,7 +27,7 @@ const SideBar = () => {
   }, [darkMode]);
 
   return (
-    <div className={`${styles.container} ${showSidebar && styles.visible}`}>
+    <div className={`${styles.container} ${showSideBar && styles.visible}`}>
       <div className={styles.innerContainer}>
         <div
           className={`${styles.boardsNumber} heading-sm`}
@@ -64,16 +64,16 @@ const SideBar = () => {
         </div>
         <button
           className={`${styles.hideSidebarBtn} heading-md`}
-          onClick={handleToggleSidebar}
+          onClick={toggleShowSideBar}
         >
           <EyeIcon />
           Hide Sidebar
         </button>
         <button
           className={`${styles.openSidebar} ${
-            showSidebar && styles.hideButton
+            showSideBar && styles.hideButton
           }`}
-          onClick={handleToggleSidebar}
+          onClick={toggleShowSideBar}
         >
           <OpenEyeIcon />
         </button>

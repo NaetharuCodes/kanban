@@ -1,0 +1,25 @@
+.container {
+  background-color: white;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 24px;
+  border-radius: 0 100px 100px 0;
+  width: 240px;
+  cursor: pointer;
+  outline: none;
+  border: none;
+}
+
+.active {
+  background-color: rgba(var(--purple), 1);
+}
+
+.text {
+  color: rgba(var(--blue-gray), 1);
+}
+
+.container.active .text {
+  color: white;
+}

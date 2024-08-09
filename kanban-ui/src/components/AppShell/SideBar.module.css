@@ -1,0 +1,120 @@
+.container {
+  position: fixed;
+  width: 260px;
+  background-color: white;
+  border-right: 1px solid rgba(var(--light-gray), 1);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+  top: 80px;
+  bottom: 0;
+  transform: translateX(-300px);
+  transition: 0.2s ease;
+  padding-bottom: 32px;
+}
+
+.visible {
+  transform: translateX(0);
+}
+
+.innerContainer {
+  width: 100%;
+}
+
+.boardsNumber {
+  padding: 20px 24px;
+  font-weight: bold;
+  color: rgba(var(--blue-gray), 1);
+}
+
+.createNewButton {
+  padding: 20px 24px;
+  background-color: white;
+  border: none;
+  color: rgba(var(--purple), 1);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.darkModeToggle {
+  padding: 20px 24px;
+  background-color: rgba(var(--light-gray), 1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  margin: 12px;
+  border-radius: 6px;
+}
+
+:global(body.dark-mode) .darkModeToggle {
+  background-color: rgba(var(--charcoal), 1);
+}
+
+.darkModeBtn {
+  position: relative;
+  width: 40px;
+  height: 20px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  margin: 0px 8px;
+}
+
+.darkModeBtn::before {
+  position: absolute;
+  content: "";
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(var(--purple), 1);
+  border-radius: 50px;
+  transition: background-color 0.3s ease;
+}
+
+.darkModeBtn::after {
+  position: absolute;
+  content: "";
+  top: 3px;
+  left: 3px;
+  height: 14px;
+  width: 14px;
+  font-size: 18px;
+  background-color: white;
+  border-radius: 100%;
+  transition: 0.2s ease;
+}
+
+.darkModeBtn.active::after {
+  transform: translateX(20px);
+}
+
+.hideSidebarBtn {
+  background-color: white;
+  border: none;
+  padding: 20px 24px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: rgba(var(--blue-gray), 1);
+  font-weight: bold;
+}
+
+.openSidebar {
+  position: fixed;
+  bottom: 32px;
+  left: 0;
+  background-color: rgba(var(--purple));
+  transform: translateX(300px);
+  transition: 0.2s;
+  border: none;
+  padding: 20px;
+  border-radius: 0 100px 100px 0;
+}
+
+.hideButton {
+  transform: translateX(-300px);
+}

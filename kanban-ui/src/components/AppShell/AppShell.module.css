@@ -1,0 +1,36 @@
+.container {
+  background-color: rgba(var(--light-blue), 1);
+  min-height: 100svh;
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+}
+
+.header {
+  background-color: white;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 16px;
+  height: 80px;
+}
+
+.button {
+  background-color: rgba(var(--purple), 1);
+  padding: 10px 18px;
+  border: none;
+  outline: none;
+  border-radius: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pipButton {
+  background-color: transparent;
+  border: none;
+  display: flex;
+  align-items: center;
+}

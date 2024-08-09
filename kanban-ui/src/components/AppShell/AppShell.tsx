@@ -18,8 +18,10 @@ const AppShell = ({ children, sideBar }: AppShellProps) => {
     <div className={styles.container}>
       <header className={styles.header}>
         <div className="flex-row">
-          <BrandIcon />
-          <div></div>
+          <div className={styles.brandContainer}>
+            <BrandIcon />
+            <h1 className={`${styles.brandText} heading-xl`}>kanban</h1>
+          </div>
           <h2 className={`${styles.headerTitle} heading-lg`}>
             Platform Launch
           </h2>
@@ -28,6 +30,9 @@ const AppShell = ({ children, sideBar }: AppShellProps) => {
         <div className="flex-row">
           <button className={styles.button}>
             <PlusIcon />
+          </button>
+          <button className={`${styles.buttonText} heading-md`}>
+            + Add New Task
           </button>
           <button className={styles.pipButton}>
             <VerticalPipIcon />

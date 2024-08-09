@@ -49,7 +49,9 @@ const AppShell = ({ children }: AppShellProps) => {
         toggleShowSideBar={handleToggleSidebar}
         showSideBar={showSidebar}
       />
-      <div>{children}</div>
+      <div className={`${styles.main} ${showSidebar && styles.shiftedMain}`}>
+        {children}
+      </div>
     </div>
   );
 };

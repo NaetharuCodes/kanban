@@ -9,14 +9,30 @@
   border: none;
   border-radius: 8px;
   font-weight: bold;
-  box-shadow: 0px 2px 8px 0px lightgray;
-  transition: 0.2s ease;
+  box-shadow: 0px 1px 4px 0px rgba(var(--dark-gray), 0.2);
+}
+
+.title {
+  text-align: start;
+}
+
+:global(body.dark-mode) .container {
+  background-color: rgba(var(--dark-gray), 1);
+  box-shadow: 0px 1px 4px 0px rgba(var(--light-gray), 0.2);
 }
 
 .container:hover {
   background-color: rgba(240, 240, 244, 1);
 }
 
+:global(body.dark-mode) .container:hover {
+  background-color: rgba(var(--dark-gray), 0.6);
+}
+
 .tasks {
+  color: rgba(var(--blue-gray), 1);
+}
+
+:global(body.dark-mode) .tasks {
   color: rgba(var(--blue-gray), 1);
 }

@@ -11,6 +11,10 @@
   text-transform: uppercase;
 }
 
+:global(body.dark-mode) .header {
+  color: rgba(var(--blue-gray));
+}
+
 .cardContainer {
   display: flex;
   flex-direction: column;

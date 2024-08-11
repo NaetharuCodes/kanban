@@ -1,0 +1,22 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.header {
+  display: flex;
+  gap: 12px;
+  color: rgba(var(--blue-gray));
+  text-transform: uppercase;
+}
+
+:global(body.dark-mode) .header {
+  color: rgba(var(--blue-gray));
+}
+
+.cardContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}

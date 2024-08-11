@@ -74,10 +74,16 @@
 
 .main {
   flex-grow: 1;
+  display: flex;
+  flex-direction: column;
 }
 
 @media only screen and (min-width: 760px) {
   .header {
+    border-bottom: 1px solid rgba(var(--light-gray));
+  }
+
+  :global(body.dark-mode) .header {
     border-bottom: 1px solid rgba(var(--mid-gray));
   }
 

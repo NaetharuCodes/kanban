@@ -1,0 +1,18 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.header {
+  display: flex;
+  gap: 12px;
+  color: rgba(var(--blue-gray));
+  text-transform: uppercase;
+}
+
+.cardContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}

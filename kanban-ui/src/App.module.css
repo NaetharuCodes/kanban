@@ -1,8 +1,10 @@
-.container {
-  background-color: white;
-  min-height: 100svh;
-}
-
-:global(body.dark-mode) .container {
-  background-color: rgba(var(--dark-gray), 1);
+.mainContainer {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, 280px);
+  gap: 20px;
+  padding: 24px;
+  overflow-x: auto;
+  grid-auto-flow: column;
+  grid-auto-columns: 280px;
+  flex-grow: 1;
 }

@@ -5,7 +5,7 @@
   left: 0;
   right: 0;
   z-index: 10;
-  background-color: red;
+  background-color: rgba(var(--dark-gray), 0.6);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -18,6 +18,9 @@
   width: 100%;
   margin: 16px;
   z-index: 12;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
 }
 
 @media screen and (min-width: 680px) {

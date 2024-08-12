@@ -8,9 +8,16 @@ interface ColumnProps {
   colName: string;
   colColor: string;
   colItems: ColItem[];
+  openModal: (id: string) => void;
 }
 
-const Column = ({ colId, colName, colColor, colItems }: ColumnProps) => {
+const Column = ({
+  colId,
+  colName,
+  colColor,
+  colItems,
+  openModal,
+}: ColumnProps) => {
   return (
     <div className={styles.container}>
       <div className={`${styles.header} heading-sm`}>
@@ -26,6 +33,7 @@ const Column = ({ colId, colName, colColor, colItems }: ColumnProps) => {
             itemName={item.itemName}
             itemSubtask={item.itemSubtasks}
             itemCompleteTasks={item.itemSubtasksComplete}
+            onClick={(id: string) => openModal(id)}
           />
         ))}
       </div>

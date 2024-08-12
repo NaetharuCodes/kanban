@@ -2,25 +2,64 @@ import AppShell from "./components/AppShell/AppShell";
 import dummyData from "./dummyData.json";
 import styles from "./App.module.css";
 import Column from "./components/Column/Column";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ViewTaskModal from "./components/ViewTaskModal/ViewTaskModal";
+
+export type TaskModalType = {
+  id: string;
+  title: string;
+  description: string;
+  openTasks: number;
+  completeTasks: number;
+  subTasks: SubTaskType[];
+};
+
+type SubTaskType = {
+  description: string;
+  complete: boolean;
+};
 
 const App = () => {
   const [viewTaskModal, setViewtaskModal] = useState<boolean>(true);
+  const [taskId, setTaskId] = useState<string | undefined>("");
+  const [taskModalData, setTaskModalData] = useState<undefined | TaskModalType>(
+    undefined
+  );
 
-  const handleToggleViewTaskModal = () => {
+  const handleToggleViewTaskModal = (id?: string) => {
+    setTaskId(id);
     setViewtaskModal(!viewTaskModal);
   };
+
+  useEffect(() => {
+    setTaskModalData({
+      id: "Test",
+      title: "This is the title",
+      description: "A description of the current task",
+      openTasks: 3,
+      completeTasks: 1,
+      subTasks: [
+        {
+          description: "some task",
+          complete: false,
+        },
+      ],
+    });
+  }, [taskId]);
 
   return (
     <AppShell>
       {viewTaskModal && (
-        <ViewTaskModal toggleModal={handleToggleViewTaskModal} />
+        <ViewTaskModal
+          toggleModal={handleToggleViewTaskModal}
+          taskData={taskModalData}
+        />
       )}
       {dummyData.colData ? (
         <div className={styles.mainContainer}>
           {dummyData.colData.map((col) => (
             <Column
+              openModal={handleToggleViewTaskModal}
               key={col.colId}
               colId={col.colId}
               colName={col.colName}

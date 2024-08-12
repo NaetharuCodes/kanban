@@ -5,6 +5,7 @@ interface ItemCardProps {
   itemName: string;
   itemSubtask: number;
   itemCompleteTasks: number;
+  onClick: (id: string) => void;
 }
 
 const ItemCard = ({
@@ -12,12 +13,13 @@ const ItemCard = ({
   itemName,
   itemSubtask,
   itemCompleteTasks,
+  onClick,
 }: ItemCardProps) => {
   return (
     <button
       className={styles.container}
       type="button"
-      onClick={() => console.log(itemId)}
+      onClick={() => onClick(itemId)}
     >
       <h3 className={`${styles.title} heading-md`}>{itemName}</h3>
       <div className={styles.tasks}>

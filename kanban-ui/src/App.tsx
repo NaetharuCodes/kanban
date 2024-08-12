@@ -2,14 +2,20 @@ import AppShell from "./components/AppShell/AppShell";
 import dummyData from "./dummyData.json";
 import styles from "./App.module.css";
 import Column from "./components/Column/Column";
+import Modal from "./components/Modal/Modal";
+import { useState } from "react";
 
 const App = () => {
-  console.log(dummyData);
-  console.log(dummyData.colData[1].colColor);
+  const [open, setOpen] = useState<boolean>(true);
+
+  const handleToggleModal = () => {
+    setOpen(!open);
+  };
 
   return (
     <AppShell>
-      {!dummyData.colData ? (
+      {open && <Modal toggleModal={handleToggleModal}>Modal</Modal>}
+      {dummyData.colData ? (
         <div className={styles.mainContainer}>
           {dummyData.colData.map((col) => (
             <Column

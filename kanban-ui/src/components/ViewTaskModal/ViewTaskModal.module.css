@@ -1,0 +1,24 @@
+.heading {
+}
+
+.description {
+  color: rgba(var(--blue-gray), 1);
+  font-weight: bold;
+}
+
+.subTaskContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.subTaskLabel {
+  color: rgba(var(--blue-gray), 1);
+  font-weight: bold;
+}
+
+.dropDownLabel {
+  margin-bottom: 8px;
+  color: rgba(var(--blue-gray), 1);
+  font-weight: bold;
+}

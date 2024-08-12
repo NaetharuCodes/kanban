@@ -2,19 +2,21 @@ import AppShell from "./components/AppShell/AppShell";
 import dummyData from "./dummyData.json";
 import styles from "./App.module.css";
 import Column from "./components/Column/Column";
-import Modal from "./components/Modal/Modal";
 import { useState } from "react";
+import ViewTaskModal from "./components/ViewTaskModal/ViewTaskModal";
 
 const App = () => {
-  const [open, setOpen] = useState<boolean>(true);
+  const [viewTaskModal, setViewtaskModal] = useState<boolean>(true);
 
-  const handleToggleModal = () => {
-    setOpen(!open);
+  const handleToggleViewTaskModal = () => {
+    setViewtaskModal(!viewTaskModal);
   };
 
   return (
     <AppShell>
-      {open && <Modal toggleModal={handleToggleModal}>Modal</Modal>}
+      {viewTaskModal && (
+        <ViewTaskModal toggleModal={handleToggleViewTaskModal} />
+      )}
       {dummyData.colData ? (
         <div className={styles.mainContainer}>
           {dummyData.colData.map((col) => (

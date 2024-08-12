@@ -21,6 +21,7 @@ const Column = ({ colId, colName, colColor, colItems }: ColumnProps) => {
       <div className={styles.cardContainer}>
         {colItems.map((item) => (
           <ItemCard
+            key={item.itemId}
             itemId={item.itemId}
             itemName={item.itemName}
             itemSubtask={item.itemSubtasks}

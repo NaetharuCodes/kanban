@@ -38,6 +38,12 @@ const App = () => {
   const [taskModalData, setTaskModalData] = useState<undefined | TaskModalType>(
     undefined
   );
+  const [allBoards, setAllBoards] = useState();
+  const [activeBoardId, setActiveBoardId] = useState<number | null>(null);
+
+  const handleChangeActiveBoard = (id: number) => {
+    setActiveBoardId(id);
+  };
 
   const handleCreateNewBoard = async (boardName: string) => {
     try {
@@ -85,8 +91,41 @@ const App = () => {
     }
   }, [taskId]);
 
+  useEffect(() => {
+    const getAllBoards = async () => {
+      try {
+        const url = "http://localhost:3000/api/boards";
+        const response = await fetch(url, {
+          method: "GET",
+        });
+        if (!response.ok) {
+          throw new Error("Error in the response");
+        }
+        const data = await response.json();
+        return data;
+      } catch (error) {
+        console.error("Error fetching boards:", error);
+        return null;
+      }
+    };
+
+    const fetchData = async () => {
+      const result = await getAllBoards();
+      if (result) {
+        setAllBoards(result);
+      }
+    };
+
+    fetchData();
+  }, []);
+
   return (
-    <AppShell toggleBoardModal={handleToggleBoardModal}>
+    <AppShell
+      toggleBoardModal={handleToggleBoardModal}
+      allBoards={allBoards}
+      activeBoardId={activeBoardId}
+      changeActiveBoard={handleChangeActiveBoard}
+    >
       {viewTaskModal && (
         <ViewTaskModal
           toggleModal={handleToggleViewTaskModal}

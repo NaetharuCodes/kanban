@@ -10,9 +10,18 @@ interface AppShellProps {
   children: React.ReactNode;
   sideBar?: boolean;
   toggleBoardModal: () => void;
+  allBoards: any;
+  activeBoardId: number | null;
+  changeActiveBoard: (id: number) => void;
 }
 
-const AppShell = ({ children, toggleBoardModal }: AppShellProps) => {
+const AppShell = ({
+  children,
+  toggleBoardModal,
+  allBoards,
+  activeBoardId,
+  changeActiveBoard,
+}: AppShellProps) => {
   const [showSidebar, setShowSidebar] = useState<boolean>(true);
 
   const handleToggleSidebar = () => {
@@ -50,6 +59,9 @@ const AppShell = ({ children, toggleBoardModal }: AppShellProps) => {
         toggleBoardModal={toggleBoardModal}
         toggleShowSideBar={handleToggleSidebar}
         showSideBar={showSidebar}
+        allBoards={allBoards}
+        activeBoardId={activeBoardId}
+        changeActiveBoard={changeActiveBoard}
       />
       <div className={`${styles.main} ${showSidebar && styles.shiftedMain}`}>
         {children}

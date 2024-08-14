@@ -3,8 +3,8 @@ import styles from "./SideBarTab.module.css";
 
 interface SideBarTabProps {
   title: string;
-  onClick: (value: string) => void;
-  value: string;
+  onClick: (value: number) => void;
+  value: number;
   active?: boolean;
 }
 

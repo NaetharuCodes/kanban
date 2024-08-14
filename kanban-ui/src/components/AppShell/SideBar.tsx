@@ -8,18 +8,22 @@ import SideBarTab from "./SideBarTab";
 import EyeIcon from "../Icons/EyeIcon";
 import OpenEyeIcon from "../Icons/OpenEyeIcon";
 
-const numberOfBoards = 3;
-
 interface SideBarProps {
   toggleShowSideBar: () => void;
   showSideBar: boolean;
   toggleBoardModal: () => void;
+  allBoards: any;
+  activeBoardId: number | null;
+  changeActiveBoard: (id: number) => void;
 }
 
 const SideBar = ({
   showSideBar,
   toggleShowSideBar,
   toggleBoardModal,
+  allBoards,
+  activeBoardId,
+  changeActiveBoard,
 }: SideBarProps) => {
   const { darkMode, toggleDarkMode } = useTheme();
 
@@ -31,45 +35,22 @@ const SideBar = ({
     }
   }, [darkMode]);
 
-  const handleCreateNewBoard = async () => {
-    try {
-      const url = "http://localhost:3000/api/boards";
-      const response = await fetch(url, {
-        method: "POST",
-      });
-      if (!response.ok) {
-        throw new Error("Error in the response");
-      } else {
-        const text = await response.text();
-        console.log(text);
-      }
-    } catch {
-      console.log("inside the catch");
-    }
-  };
-
   return (
     <div className={`${styles.container} ${showSideBar && styles.visible}`}>
       <div className={styles.innerContainer}>
-        <div
-          className={`${styles.boardsNumber} heading-sm`}
-        >{`All BOARDS (${numberOfBoards})`}</div>
-        <SideBarTab
-          title="My Board"
-          onClick={(value: string) => console.log(value)}
-          value="My Board"
-          active
-        />
-        <SideBarTab
-          title="My Board"
-          onClick={(value: string) => console.log(value)}
-          value="My Board"
-        />
-        <SideBarTab
-          title="My Board"
-          onClick={(value: string) => console.log(value)}
-          value="My Board"
-        />
+        <div className={`${styles.boardsNumber} heading-sm`}>{`All BOARDS (${
+          allBoards ? allBoards.length : 0
+        })`}</div>
+        {allBoards &&
+          allBoards.map((board: { id: number; name: string }) => (
+            <SideBarTab
+              key={board.id}
+              title={board.name}
+              onClick={() => changeActiveBoard(board.id)}
+              value={board.id}
+              active={board.id === activeBoardId}
+            />
+          ))}
         <button
           onClick={toggleBoardModal}
           className={`${styles.createNewButton} heading-md`}

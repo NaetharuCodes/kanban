@@ -1,5 +1,4 @@
 .container {
-  width: 350px;
   position: relative;
 }
 
@@ -30,4 +29,10 @@
 
 :global(body.dark-mode) .errorMessage {
   color: rgba(var(--red), 1);
+}
+
+.label {
+  color: rgba(var(--blue-gray), 1);
+  font-weight: bold;
+  margin-bottom: 18px;
 }

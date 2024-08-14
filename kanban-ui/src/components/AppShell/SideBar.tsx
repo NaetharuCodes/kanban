@@ -13,9 +13,14 @@ const numberOfBoards = 3;
 interface SideBarProps {
   toggleShowSideBar: () => void;
   showSideBar: boolean;
+  toggleBoardModal: () => void;
 }
 
-const SideBar = ({ showSideBar, toggleShowSideBar }: SideBarProps) => {
+const SideBar = ({
+  showSideBar,
+  toggleShowSideBar,
+  toggleBoardModal,
+}: SideBarProps) => {
   const { darkMode, toggleDarkMode } = useTheme();
 
   useEffect(() => {
@@ -66,7 +71,7 @@ const SideBar = ({ showSideBar, toggleShowSideBar }: SideBarProps) => {
           value="My Board"
         />
         <button
-          onClick={handleCreateNewBoard}
+          onClick={toggleBoardModal}
           className={`${styles.createNewButton} heading-md`}
         >
           <NewBoardIcon />+ Create New Board

@@ -9,7 +9,11 @@ export const getBoard = (req: Request, res: Response) => {
 }
 
 export const createBoard = (req: Request, res: Response) => {
-    res.send('create a new board right now');    
+    const {name} = req.body
+    console.log('reqesting', name)
+
+
+    
 }
 
 export const updateBoard = (req: Request, res: Response) => {

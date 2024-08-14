@@ -9,9 +9,10 @@ import SideBar from "./SideBar";
 interface AppShellProps {
   children: React.ReactNode;
   sideBar?: boolean;
+  toggleBoardModal: () => void;
 }
 
-const AppShell = ({ children }: AppShellProps) => {
+const AppShell = ({ children, toggleBoardModal }: AppShellProps) => {
   const [showSidebar, setShowSidebar] = useState<boolean>(true);
 
   const handleToggleSidebar = () => {
@@ -46,6 +47,7 @@ const AppShell = ({ children }: AppShellProps) => {
         </div>
       </header>
       <SideBar
+        toggleBoardModal={toggleBoardModal}
         toggleShowSideBar={handleToggleSidebar}
         showSideBar={showSidebar}
       />

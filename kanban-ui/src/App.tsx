@@ -4,6 +4,7 @@ import styles from "./App.module.css";
 import Column from "./components/Column/Column";
 import { useEffect, useState } from "react";
 import ViewTaskModal from "./components/ViewTaskModal/ViewTaskModal";
+import CreateBoardModal from "./components/CreateBoardModal/CreateBoardModal";
 
 export type TaskModalType = {
   id: string;
@@ -31,15 +32,41 @@ function findItemById(data: any, targetId: string) {
 }
 
 const App = () => {
-  const [viewTaskModal, setViewtaskModal] = useState<boolean>(true);
+  const [viewBoardModal, setViewBoardModal] = useState<boolean>(true);
+  const [viewTaskModal, setViewtaskModal] = useState<boolean>(false);
   const [taskId, setTaskId] = useState<string | undefined>("");
   const [taskModalData, setTaskModalData] = useState<undefined | TaskModalType>(
     undefined
   );
 
+  const handleCreateNewBoard = async (boardName: string) => {
+    try {
+      const url = "http://localhost:3000/api/boards";
+      const response = await fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ name: boardName }),
+      });
+      if (!response.ok) {
+        throw new Error("Error in the response");
+      } else {
+        const text = await response.text();
+        console.log(text);
+      }
+    } catch (error) {
+      console.log("inside the catch", error);
+    }
+  };
+
   const handleToggleViewTaskModal = (id?: string) => {
     setTaskId(id);
     setViewtaskModal(!viewTaskModal);
+  };
+
+  const handleToggleBoardModal = () => {
+    setViewBoardModal(!viewBoardModal);
   };
 
   useEffect(() => {
@@ -59,11 +86,17 @@ const App = () => {
   }, [taskId]);
 
   return (
-    <AppShell>
+    <AppShell toggleBoardModal={handleToggleBoardModal}>
       {viewTaskModal && (
         <ViewTaskModal
           toggleModal={handleToggleViewTaskModal}
           taskData={taskModalData}
+        />
+      )}
+      {viewBoardModal && (
+        <CreateBoardModal
+          toggleModal={handleToggleBoardModal}
+          createNewBoard={handleCreateNewBoard}
         />
       )}
       {dummyData.colData ? (

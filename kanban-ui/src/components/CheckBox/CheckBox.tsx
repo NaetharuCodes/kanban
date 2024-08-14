@@ -3,17 +3,16 @@ import styles from "./CheckBox.module.css";
 
 interface CheckBoxProps {
   label: string;
-  taskId: string;
   checked: boolean;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-const CheckBox = ({ label, taskId, checked, onChange }: CheckBoxProps) => {
+const CheckBox = ({ label, checked, onChange }: CheckBoxProps) => {
   return (
     <div className={styles.container}>
       <label
         className={`${styles.label} ${checked && styles.checkedLabel}`}
-        htmlFor={taskId}
+        htmlFor={label}
       >
         <div
           className={`${styles.customCheckBox} ${checked && styles.checked}`}
@@ -22,7 +21,6 @@ const CheckBox = ({ label, taskId, checked, onChange }: CheckBoxProps) => {
         </div>
         {label}
         <input
-          id={taskId}
           className={styles.input}
           type="checkbox"
           name={label}

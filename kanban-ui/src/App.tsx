@@ -19,6 +19,17 @@ type SubTaskType = {
   complete: boolean;
 };
 
+function findItemById(data: any, targetId: string) {
+  for (const column of data.colData) {
+    for (const item of column.colItems) {
+      if (item.itemId === targetId) {
+        return item;
+      }
+    }
+  }
+  return null; // Return null if the item is not found
+}
+
 const App = () => {
   const [viewTaskModal, setViewtaskModal] = useState<boolean>(true);
   const [taskId, setTaskId] = useState<string | undefined>("");
@@ -32,19 +43,19 @@ const App = () => {
   };
 
   useEffect(() => {
-    setTaskModalData({
-      id: "Test",
-      title: "This is the title",
-      description: "A description of the current task",
-      openTasks: 3,
-      completeTasks: 1,
-      subTasks: [
-        {
-          description: "some task",
-          complete: false,
-        },
-      ],
-    });
+    if (taskId) {
+      const currentTask = findItemById(dummyData, taskId as string);
+      console.log(currentTask);
+
+      setTaskModalData({
+        id: currentTask.itemId,
+        title: currentTask.itemName,
+        description: currentTask.description,
+        openTasks: currentTask.itemSubtasks,
+        completeTasks: currentTask.itemSubtasksComplete,
+        subTasks: currentTask.subTasks,
+      });
+    }
   }, [taskId]);
 
   return (

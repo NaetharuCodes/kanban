@@ -6,10 +6,12 @@ import styles from "./ViewTaskModal.module.css";
 
 interface ViewTaskModalProps {
   toggleModal: () => void;
-  taskData: TaskModalType;
+  taskData: TaskModalType | undefined;
 }
 
 const ViewTaskModal = ({ toggleModal, taskData }: ViewTaskModalProps) => {
+  console.log("TASK DATA: ", taskData);
+
   return (
     <Modal toggleModal={toggleModal}>
       {taskData && (
@@ -27,7 +29,6 @@ const ViewTaskModal = ({ toggleModal, taskData }: ViewTaskModalProps) => {
                 key={subtask.description}
                 label={subtask.description}
                 checked={subtask.complete}
-                taskId="123"
                 onChange={() => {}}
               />
             ))}

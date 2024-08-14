@@ -6,7 +6,7 @@ import styles from "./CreateBoardModal.module.css";
 
 interface CreateBoardModalProps {
   toggleModal: () => void;
-  createNewBoard: (boardName: string) => void;
+  createNewBoard: (e: React.FormEvent, boardName: string) => void;
 }
 
 const CreateBoardModal = ({
@@ -22,7 +22,10 @@ const CreateBoardModal = ({
   return (
     <Modal toggleModal={toggleModal}>
       <h2 className={styles.header}>Add New Board</h2>
-      <form action="submit" onSubmit={() => createNewBoard(name)}>
+      <form
+        action="submit"
+        onSubmit={(e: React.FormEvent) => createNewBoard(e, name)}
+      >
         <TextField
           label="name"
           placeholder="e.g. Web Design"

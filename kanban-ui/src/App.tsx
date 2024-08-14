@@ -5,6 +5,7 @@ import Column from "./components/Column/Column";
 import { useEffect, useState } from "react";
 import ViewTaskModal from "./components/ViewTaskModal/ViewTaskModal";
 import CreateBoardModal from "./components/CreateBoardModal/CreateBoardModal";
+import { Board } from "./types";
 
 export type TaskModalType = {
   id: string;
@@ -28,24 +29,29 @@ function findItemById(data: any, targetId: string) {
       }
     }
   }
-  return null; // Return null if the item is not found
+  return null;
 }
 
 const App = () => {
-  const [viewBoardModal, setViewBoardModal] = useState<boolean>(true);
+  const [viewBoardModal, setViewBoardModal] = useState<boolean>(false);
   const [viewTaskModal, setViewtaskModal] = useState<boolean>(false);
   const [taskId, setTaskId] = useState<string | undefined>("");
   const [taskModalData, setTaskModalData] = useState<undefined | TaskModalType>(
     undefined
   );
-  const [allBoards, setAllBoards] = useState();
+  const [allBoards, setAllBoards] = useState<Board[]>();
   const [activeBoardId, setActiveBoardId] = useState<number | null>(null);
+  const [activeBoard, setActiveBoard] = useState<Board | null>();
 
   const handleChangeActiveBoard = (id: number) => {
     setActiveBoardId(id);
   };
 
-  const handleCreateNewBoard = async (boardName: string) => {
+  const handleCreateNewBoard = async (
+    e: React.FormEvent,
+    boardName: string
+  ) => {
+    e.preventDefault();
     try {
       const url = "http://localhost:3000/api/boards";
       const response = await fetch(url, {
@@ -58,12 +64,19 @@ const App = () => {
       if (!response.ok) {
         throw new Error("Error in the response");
       } else {
-        const text = await response.text();
-        console.log(text);
+        const newBoard = await response.json();
+        console.log("newBoard", newBoard);
+        allBoards
+          ? setAllBoards([...allBoards, newBoard])
+          : setAllBoards(newBoard);
+        setActiveBoardId(newBoard.id);
+        setActiveBoard(newBoard);
       }
     } catch (error) {
       console.log("inside the catch", error);
     }
+
+    handleToggleBoardModal();
   };
 
   const handleToggleViewTaskModal = (id?: string) => {
@@ -113,11 +126,14 @@ const App = () => {
       const result = await getAllBoards();
       if (result) {
         setAllBoards(result);
+        setActiveBoardId(result[0].id);
       }
     };
 
     fetchData();
   }, []);
+
+  useEffect(() => {});
 
   return (
     <AppShell

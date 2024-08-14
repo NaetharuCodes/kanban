@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useTheme } from "../../context/ThemeContext";
 import MoonIcon from "../Icons/MoonIcon";
 import NewBoardIcon from "../Icons/NewBoardIcon";
@@ -13,9 +13,14 @@ const numberOfBoards = 3;
 interface SideBarProps {
   toggleShowSideBar: () => void;
   showSideBar: boolean;
+  toggleBoardModal: () => void;
 }
 
-const SideBar = ({ showSideBar, toggleShowSideBar }: SideBarProps) => {
+const SideBar = ({
+  showSideBar,
+  toggleShowSideBar,
+  toggleBoardModal,
+}: SideBarProps) => {
   const { darkMode, toggleDarkMode } = useTheme();
 
   useEffect(() => {
@@ -25,6 +30,23 @@ const SideBar = ({ showSideBar, toggleShowSideBar }: SideBarProps) => {
       document.body.classList.remove("dark-mode");
     }
   }, [darkMode]);
+
+  const handleCreateNewBoard = async () => {
+    try {
+      const url = "http://localhost:3000/api/boards";
+      const response = await fetch(url, {
+        method: "POST",
+      });
+      if (!response.ok) {
+        throw new Error("Error in the response");
+      } else {
+        const text = await response.text();
+        console.log(text);
+      }
+    } catch {
+      console.log("inside the catch");
+    }
+  };
 
   return (
     <div className={`${styles.container} ${showSideBar && styles.visible}`}>
@@ -48,7 +70,10 @@ const SideBar = ({ showSideBar, toggleShowSideBar }: SideBarProps) => {
           onClick={(value: string) => console.log(value)}
           value="My Board"
         />
-        <button className={`${styles.createNewButton} heading-md`}>
+        <button
+          onClick={toggleBoardModal}
+          className={`${styles.createNewButton} heading-md`}
+        >
           <NewBoardIcon />+ Create New Board
         </button>
       </div>

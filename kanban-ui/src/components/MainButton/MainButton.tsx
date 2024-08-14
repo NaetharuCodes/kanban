@@ -8,12 +8,19 @@ enum Buttons {
 
 interface MainButtonProps {
   text: string;
-  onClick: () => void;
+  onClick?: () => void;
   type: string;
   large?: boolean;
+  disabled: boolean;
 }
 
-const MainButton = ({ text, onClick, type, large }: MainButtonProps) => {
+const MainButton = ({
+  text,
+  onClick,
+  type,
+  large,
+  disabled,
+}: MainButtonProps) => {
   return (
     <button
       className={`${styles.button} ${
@@ -24,6 +31,7 @@ const MainButton = ({ text, onClick, type, large }: MainButtonProps) => {
           : styles.destructive
       } ${large && styles.large}`}
       onClick={onClick}
+      disabled={disabled}
     >
       {text}
     </button>

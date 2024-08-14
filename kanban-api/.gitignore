@@ -23,5 +23,5 @@ dist-ssr
 *.sln
 *.sw?
 
+dev.db* 
 .env
-dev.db*

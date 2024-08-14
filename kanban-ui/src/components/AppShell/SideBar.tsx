@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useTheme } from "../../context/ThemeContext";
 import MoonIcon from "../Icons/MoonIcon";
 import NewBoardIcon from "../Icons/NewBoardIcon";
@@ -26,6 +26,23 @@ const SideBar = ({ showSideBar, toggleShowSideBar }: SideBarProps) => {
     }
   }, [darkMode]);
 
+  const handleCreateNewBoard = async () => {
+    try {
+      const url = "http://localhost:3000/api/boards";
+      const response = await fetch(url, {
+        method: "POST",
+      });
+      if (!response.ok) {
+        throw new Error("Error in the response");
+      } else {
+        const text = await response.text();
+        console.log(text);
+      }
+    } catch {
+      console.log("inside the catch");
+    }
+  };
+
   return (
     <div className={`${styles.container} ${showSideBar && styles.visible}`}>
       <div className={styles.innerContainer}>
@@ -48,7 +65,10 @@ const SideBar = ({ showSideBar, toggleShowSideBar }: SideBarProps) => {
           onClick={(value: string) => console.log(value)}
           value="My Board"
         />
-        <button className={`${styles.createNewButton} heading-md`}>
+        <button
+          onClick={handleCreateNewBoard}
+          className={`${styles.createNewButton} heading-md`}
+        >
           <NewBoardIcon />+ Create New Board
         </button>
       </div>

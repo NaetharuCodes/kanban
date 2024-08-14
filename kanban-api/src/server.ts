@@ -10,6 +10,11 @@ app.use(express.json())
 
 app.use('/api/boards', boardRoutes)
 
+app.get('/test', (req: Request, res: Response) => {
+  res.send('Hello World from the test route!');
+});
+
+
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
 });

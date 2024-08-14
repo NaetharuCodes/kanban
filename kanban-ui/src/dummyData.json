@@ -9,25 +9,73 @@
           "itemId": "0001",
           "itemName": "Make some code",
           "itemSubtasks": 3,
-          "itemSubtasksComplete": 2
+          "itemSubtasksComplete": 2,
+          "subTasks": [
+            {
+              "description": "Do some cool things",
+              "complete": true
+            },
+            {
+              "description": "Implement new features",
+              "complete": true
+            },
+            {
+              "description": "Refactor existing code",
+              "complete": false
+            }
+          ]
         },
         {
           "itemId": "0002",
           "itemName": "Create Designs that are really awesome and look super cool to all who will see them",
           "itemSubtasks": 2,
-          "itemSubtasksComplete": 0
+          "itemSubtasksComplete": 0,
+          "subTasks": [
+            {
+              "description": "Sketch initial concepts",
+              "complete": false
+            },
+            {
+              "description": "Finalize design mockups",
+              "complete": false
+            }
+          ]
         },
         {
           "itemId": "0003",
           "itemName": "Animate CSS",
           "itemSubtasks": 4,
-          "itemSubtasksComplete": 1
+          "itemSubtasksComplete": 1,
+          "subTasks": [
+            {
+              "description": "Research animation techniques",
+              "complete": true
+            },
+            {
+              "description": "Create keyframe animations",
+              "complete": false
+            },
+            {
+              "description": "Implement transitions",
+              "complete": false
+            },
+            {
+              "description": "Optimize for performance",
+              "complete": false
+            }
+          ]
         },
         {
           "itemId": "0004",
           "itemName": "Implement CICD",
           "itemSubtasks": 1,
-          "itemSubtasksComplete": 0
+          "itemSubtasksComplete": 0,
+          "subTasks": [
+            {
+              "description": "Set up CI/CD pipeline",
+              "complete": false
+            }
+          ]
         }
       ]
     },
@@ -40,25 +88,105 @@
           "itemId": "0005",
           "itemName": "Refactor Backend API",
           "itemSubtasks": 5,
-          "itemSubtasksComplete": 2
+          "itemSubtasksComplete": 2,
+          "subTasks": [
+            {
+              "description": "Analyze current API structure",
+              "complete": true
+            },
+            {
+              "description": "Design new API architecture",
+              "complete": true
+            },
+            {
+              "description": "Implement new endpoints",
+              "complete": false
+            },
+            {
+              "description": "Update documentation",
+              "complete": false
+            },
+            {
+              "description": "Perform thorough testing",
+              "complete": false
+            }
+          ]
         },
         {
           "itemId": "0006",
           "itemName": "Optimize Database Queries",
           "itemSubtasks": 3,
-          "itemSubtasksComplete": 1
+          "itemSubtasksComplete": 1,
+          "subTasks": [
+            {
+              "description": "Identify slow queries",
+              "complete": true
+            },
+            {
+              "description": "Rewrite inefficient queries",
+              "complete": false
+            },
+            {
+              "description": "Add appropriate indexes",
+              "complete": false
+            }
+          ]
         },
         {
           "itemId": "0007",
           "itemName": "Implement User Authentication",
           "itemSubtasks": 4,
-          "itemSubtasksComplete": 3
+          "itemSubtasksComplete": 3,
+          "subTasks": [
+            {
+              "description": "Design authentication flow",
+              "complete": true
+            },
+            {
+              "description": "Implement login functionality",
+              "complete": true
+            },
+            {
+              "description": "Add password reset feature",
+              "complete": true
+            },
+            {
+              "description": "Integrate with third-party auth providers",
+              "complete": false
+            }
+          ]
         },
         {
           "itemId": "0008",
           "itemName": "Create User Dashboard",
           "itemSubtasks": 6,
-          "itemSubtasksComplete": 2
+          "itemSubtasksComplete": 2,
+          "subTasks": [
+            {
+              "description": "Design dashboard layout",
+              "complete": true
+            },
+            {
+              "description": "Implement data visualization components",
+              "complete": true
+            },
+            {
+              "description": "Add user settings section",
+              "complete": false
+            },
+            {
+              "description": "Integrate with backend API",
+              "complete": false
+            },
+            {
+              "description": "Implement real-time updates",
+              "complete": false
+            },
+            {
+              "description": "Optimize for mobile devices",
+              "complete": false
+            }
+          ]
         }
       ]
     },
@@ -71,19 +199,61 @@
           "itemId": "0009",
           "itemName": "Unit Testing for Core Modules",
           "itemSubtasks": 4,
-          "itemSubtasksComplete": 3
+          "itemSubtasksComplete": 3,
+          "subTasks": [
+            {
+              "description": "Write tests for authentication module",
+              "complete": true
+            },
+            {
+              "description": "Create tests for data processing module",
+              "complete": true
+            },
+            {
+              "description": "Implement tests for API endpoints",
+              "complete": true
+            },
+            {
+              "description": "Add tests for utility functions",
+              "complete": false
+            }
+          ]
         },
         {
           "itemId": "0010",
           "itemName": "Integration Testing",
           "itemSubtasks": 3,
-          "itemSubtasksComplete": 1
+          "itemSubtasksComplete": 1,
+          "subTasks": [
+            {
+              "description": "Set up integration test environment",
+              "complete": true
+            },
+            {
+              "description": "Write end-to-end tests",
+              "complete": false
+            },
+            {
+              "description": "Implement API integration tests",
+              "complete": false
+            }
+          ]
         },
         {
           "itemId": "0011",
           "itemName": "Performance Testing",
           "itemSubtasks": 2,
-          "itemSubtasksComplete": 0
+          "itemSubtasksComplete": 0,
+          "subTasks": [
+            {
+              "description": "Set up performance testing tools",
+              "complete": false
+            },
+            {
+              "description": "Run load tests on critical components",
+              "complete": false
+            }
+          ]
         }
       ]
     },
@@ -96,31 +266,109 @@
           "itemId": "0012",
           "itemName": "Setup Development Environment",
           "itemSubtasks": 3,
-          "itemSubtasksComplete": 3
+          "itemSubtasksComplete": 3,
+          "subTasks": [
+            {
+              "description": "Install necessary software",
+              "complete": true
+            },
+            {
+              "description": "Configure version control",
+              "complete": true
+            },
+            {
+              "description": "Set up local development server",
+              "complete": true
+            }
+          ]
         },
         {
           "itemId": "0013",
           "itemName": "Create Project Documentation",
           "itemSubtasks": 2,
-          "itemSubtasksComplete": 2
+          "itemSubtasksComplete": 2,
+          "subTasks": [
+            {
+              "description": "Write project overview",
+              "complete": true
+            },
+            {
+              "description": "Document API endpoints",
+              "complete": true
+            }
+          ]
         },
         {
           "itemId": "0014",
           "itemName": "Design Database Schema",
           "itemSubtasks": 4,
-          "itemSubtasksComplete": 4
+          "itemSubtasksComplete": 4,
+          "subTasks": [
+            {
+              "description": "Identify data requirements",
+              "complete": true
+            },
+            {
+              "description": "Create entity-relationship diagram",
+              "complete": true
+            },
+            {
+              "description": "Define table structures",
+              "complete": true
+            },
+            {
+              "description": "Optimize for performance",
+              "complete": true
+            }
+          ]
         },
         {
           "itemId": "0015",
           "itemName": "Implement Logging System",
           "itemSubtasks": 3,
-          "itemSubtasksComplete": 3
+          "itemSubtasksComplete": 3,
+          "subTasks": [
+            {
+              "description": "Choose logging framework",
+              "complete": true
+            },
+            {
+              "description": "Implement error logging",
+              "complete": true
+            },
+            {
+              "description": "Set up log rotation",
+              "complete": true
+            }
+          ]
         },
         {
           "itemId": "0016",
           "itemName": "Create Initial Wireframes",
           "itemSubtasks": 5,
-          "itemSubtasksComplete": 5
+          "itemSubtasksComplete": 5,
+          "subTasks": [
+            {
+              "description": "Sketch homepage layout",
+              "complete": true
+            },
+            {
+              "description": "Design user profile page",
+              "complete": true
+            },
+            {
+              "description": "Create product listing wireframe",
+              "complete": true
+            },
+            {
+              "description": "Design checkout process flow",
+              "complete": true
+            },
+            {
+              "description": "Mockup mobile responsive layouts",
+              "complete": true
+            }
+          ]
         }
       ]
     }

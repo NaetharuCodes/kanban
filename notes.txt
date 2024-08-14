@@ -1,0 +1,10 @@
+CRUD: 
+
+1: The Board (contains n cols)
+2: The Col (containers n tickets)
+3: The Ticket (contains n subtasks)
+4: The subtasks
+
+Proposed => Active => Review => Complete
+
+

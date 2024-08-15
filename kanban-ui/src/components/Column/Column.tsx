@@ -10,7 +10,12 @@ interface ColumnProps {
   openModal: (id: number) => void;
 }
 
-const Column = ({ colName, colColor, colItems, openModal }: ColumnProps) => {
+const Column = ({
+  colName,
+  colColor,
+  colItems = [],
+  openModal,
+}: ColumnProps) => {
   return (
     <div className={styles.container}>
       <div className={`${styles.header} heading-sm`}>

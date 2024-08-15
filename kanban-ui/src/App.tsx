@@ -112,7 +112,7 @@ const App = () => {
         );
       } else {
         setAllBoards(allBoards!.filter((entry) => entry.id !== activeBoardId));
-        setActiveBoard(allBoards ? allBoards[0] : null);
+        setActiveBoard(allBoards ? allBoards[0] : undefined);
         handleToggleDeleteModal();
       }
     } catch (error) {
@@ -120,8 +120,33 @@ const App = () => {
     }
   };
 
-  const handleCreateNewCol = () => {
+  const handleCreateNewCol = async () => {
     const url = "http://localhost:3000/api/cols";
+    const response = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        boardId: activeBoardId,
+        name: "New Col",
+        color: "#123321",
+      }),
+    });
+    if (!response.ok) {
+      throw new Error("Error in the col response");
+    } else {
+      const newCol = await response.json();
+
+      console.log("newCol", newCol);
+      if (activeBoard) {
+        const updatedBoard = {
+          ...activeBoard,
+          cols: activeBoard!.cols ? [...activeBoard?.cols, newCol] : [response],
+        };
+        setActiveBoard(updatedBoard);
+      }
+    }
   };
 
   useEffect(() => {
@@ -216,7 +241,10 @@ const App = () => {
             />
           ))}
           <div className={styles.newColContainer}>
-            <button className={`${styles.newColBtn} heading-xl`}>
+            <button
+              className={`${styles.newColBtn} heading-xl`}
+              onClick={handleCreateNewCol}
+            >
               + New Column
             </button>
           </div>
@@ -226,7 +254,10 @@ const App = () => {
           <p className={`${styles.noColsText} heading-lg`}>
             This board is empty. Createa a new column to get started.
           </p>
-          <button className={`${styles.noColsBtn} heading-md`}>
+          <button
+            className={`${styles.noColsBtn} heading-md`}
+            onClick={handleCreateNewCol}
+          >
             + Add New Column
           </button>
         </div>

@@ -13,6 +13,7 @@ interface AppShellProps {
   allBoards: any;
   activeBoardId: number | null;
   changeActiveBoard: (id: number) => void;
+  toggleDeleteModal: () => void;
 }
 
 const AppShell = ({
@@ -21,6 +22,7 @@ const AppShell = ({
   allBoards,
   activeBoardId,
   changeActiveBoard,
+  toggleDeleteModal,
 }: AppShellProps) => {
   const [showSidebar, setShowSidebar] = useState<boolean>(true);
 
@@ -50,7 +52,7 @@ const AppShell = ({
           <button className={`${styles.buttonText} heading-md`}>
             + Add New Task
           </button>
-          <button className={styles.pipButton}>
+          <button className={styles.pipButton} onClick={toggleDeleteModal}>
             <VerticalPipIcon />
           </button>
         </div>

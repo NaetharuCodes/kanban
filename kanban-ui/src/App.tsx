@@ -5,6 +5,8 @@ import Column from "./components/Column/Column";
 import { useEffect, useState } from "react";
 import ViewTaskModal from "./components/ViewTaskModal/ViewTaskModal";
 import CreateBoardModal from "./components/CreateBoardModal/CreateBoardModal";
+import { Board } from "./types";
+import DeleteBoardModal from "./components/DeleteBoardModal/DeleteBoardModal";
 
 export type TaskModalType = {
   id: string;
@@ -28,24 +30,30 @@ function findItemById(data: any, targetId: string) {
       }
     }
   }
-  return null; // Return null if the item is not found
+  return null;
 }
 
 const App = () => {
-  const [viewBoardModal, setViewBoardModal] = useState<boolean>(true);
+  const [viewBoardModal, setViewBoardModal] = useState<boolean>(false);
   const [viewTaskModal, setViewtaskModal] = useState<boolean>(false);
+  const [viewDeleteModal, setViewDeleteModal] = useState<boolean>(false);
   const [taskId, setTaskId] = useState<string | undefined>("");
   const [taskModalData, setTaskModalData] = useState<undefined | TaskModalType>(
     undefined
   );
-  const [allBoards, setAllBoards] = useState();
+  const [allBoards, setAllBoards] = useState<Board[]>();
   const [activeBoardId, setActiveBoardId] = useState<number | null>(null);
+  const [activeBoard, setActiveBoard] = useState<Board | null>();
 
   const handleChangeActiveBoard = (id: number) => {
     setActiveBoardId(id);
   };
 
-  const handleCreateNewBoard = async (boardName: string) => {
+  const handleCreateNewBoard = async (
+    e: React.FormEvent,
+    boardName: string
+  ) => {
+    e.preventDefault();
     try {
       const url = "http://localhost:3000/api/boards";
       const response = await fetch(url, {
@@ -58,11 +66,37 @@ const App = () => {
       if (!response.ok) {
         throw new Error("Error in the response");
       } else {
-        const text = await response.text();
-        console.log(text);
+        const newBoard = await response.json();
+        allBoards
+          ? setAllBoards([...allBoards, newBoard])
+          : setAllBoards(newBoard);
+        setActiveBoardId(newBoard.id);
+        setActiveBoard(newBoard);
       }
     } catch (error) {
-      console.log("inside the catch", error);
+      console.error("inside the catch", error);
+    }
+
+    handleToggleBoardModal();
+  };
+
+  const handleDeleteBoard = async () => {
+    try {
+      const url = `http://localhost:3000/api/boards/${activeBoardId}`;
+      const response = await fetch(url, {
+        method: "DELETE",
+      });
+      if (!response.ok) {
+        throw new Error(
+          `Error trying to delete board with id ${activeBoardId}`
+        );
+      } else {
+        setAllBoards(allBoards!.filter((entry) => entry.id !== activeBoardId));
+        setActiveBoard(allBoards ? allBoards[0] : null);
+        handleToggleDeleteModal();
+      }
+    } catch (error) {
+      console.error(error);
     }
   };
 
@@ -73,6 +107,10 @@ const App = () => {
 
   const handleToggleBoardModal = () => {
     setViewBoardModal(!viewBoardModal);
+  };
+
+  const handleToggleDeleteModal = () => {
+    setViewDeleteModal(!viewDeleteModal);
   };
 
   useEffect(() => {
@@ -113,15 +151,19 @@ const App = () => {
       const result = await getAllBoards();
       if (result) {
         setAllBoards(result);
+        setActiveBoardId(result.length > 0 ? result[0].id : null);
       }
     };
 
     fetchData();
   }, []);
 
+  useEffect(() => {});
+
   return (
     <AppShell
       toggleBoardModal={handleToggleBoardModal}
+      toggleDeleteModal={handleToggleDeleteModal}
       allBoards={allBoards}
       activeBoardId={activeBoardId}
       changeActiveBoard={handleChangeActiveBoard}
@@ -136,6 +178,14 @@ const App = () => {
         <CreateBoardModal
           toggleModal={handleToggleBoardModal}
           createNewBoard={handleCreateNewBoard}
+        />
+      )}
+      {viewDeleteModal && (
+        <DeleteBoardModal
+          toggleModal={handleToggleDeleteModal}
+          title={activeBoard?.name as string}
+          cancel={() => {}}
+          deleteBoard={handleDeleteBoard}
         />
       )}
       {dummyData.colData ? (

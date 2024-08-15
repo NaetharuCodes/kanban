@@ -1,5 +1,4 @@
 import AppShell from "./components/AppShell/AppShell";
-import dummyData from "./dummyData.json";
 import styles from "./App.module.css";
 import Column from "./components/Column/Column";
 import { useEffect, useState } from "react";
@@ -22,7 +21,7 @@ type SubTaskType = {
   complete: boolean;
 };
 
-function findItemById(data: any, targetId: string) {
+function findItemById(data: any, targetId: number) {
   for (const column of data.colData) {
     for (const item of column.colItems) {
       if (item.itemId === targetId) {
@@ -34,19 +33,40 @@ function findItemById(data: any, targetId: string) {
 }
 
 const App = () => {
+  // MODAL TOGGLES
+
   const [viewBoardModal, setViewBoardModal] = useState<boolean>(false);
   const [viewTaskModal, setViewtaskModal] = useState<boolean>(false);
   const [viewDeleteModal, setViewDeleteModal] = useState<boolean>(false);
-  const [taskId, setTaskId] = useState<string | undefined>("");
+
+  const handleToggleViewTaskModal = (id?: number) => {
+    setTaskId(id);
+    setViewtaskModal(!viewTaskModal);
+  };
+
+  const handleToggleBoardModal = () => {
+    setViewBoardModal(!viewBoardModal);
+  };
+
+  const handleToggleDeleteModal = () => {
+    setViewDeleteModal(!viewDeleteModal);
+  };
+
+  // MAIN STATE
+
+  const [taskId, setTaskId] = useState<number | undefined>(undefined);
   const [taskModalData, setTaskModalData] = useState<undefined | TaskModalType>(
     undefined
   );
   const [allBoards, setAllBoards] = useState<Board[]>();
   const [activeBoardId, setActiveBoardId] = useState<number | null>(null);
-  const [activeBoard, setActiveBoard] = useState<Board | null>();
+  const [activeBoard, setActiveBoard] = useState<Board | undefined>();
 
   const handleChangeActiveBoard = (id: number) => {
     setActiveBoardId(id);
+    setActiveBoard(
+      allBoards ? allBoards.find((board) => board.id === id) : undefined
+    );
   };
 
   const handleCreateNewBoard = async (
@@ -91,8 +111,7 @@ const App = () => {
           `Error trying to delete board with id ${activeBoardId}`
         );
       } else {
-        setAllBoards(allBoards!.filter((entry) => entry.id !== activeBoardId));
-        setActiveBoard(allBoards ? allBoards[0] : null);
+        setActiveBoardId(null);
         handleToggleDeleteModal();
       }
     } catch (error) {
@@ -100,22 +119,38 @@ const App = () => {
     }
   };
 
-  const handleToggleViewTaskModal = (id?: string) => {
-    setTaskId(id);
-    setViewtaskModal(!viewTaskModal);
-  };
+  const handleCreateNewCol = async () => {
+    const url = "http://localhost:3000/api/cols";
+    const response = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        boardId: activeBoardId,
+        name: "New Col",
+        color: "#123321",
+      }),
+    });
+    if (!response.ok) {
+      throw new Error("Error in the col response");
+    } else {
+      const newCol = await response.json();
 
-  const handleToggleBoardModal = () => {
-    setViewBoardModal(!viewBoardModal);
-  };
-
-  const handleToggleDeleteModal = () => {
-    setViewDeleteModal(!viewDeleteModal);
+      console.log("newCol", newCol);
+      if (activeBoard) {
+        const updatedBoard = {
+          ...activeBoard,
+          cols: activeBoard!.cols ? [...activeBoard?.cols, newCol] : [response],
+        };
+        setActiveBoard(updatedBoard);
+      }
+    }
   };
 
   useEffect(() => {
     if (taskId) {
-      const currentTask = findItemById(dummyData, taskId as string);
+      const currentTask = findItemById(activeBoard, taskId);
       console.log(currentTask);
 
       setTaskModalData({
@@ -151,14 +186,25 @@ const App = () => {
       const result = await getAllBoards();
       if (result) {
         setAllBoards(result);
-        setActiveBoardId(result.length > 0 ? result[0].id : null);
+        console.log("length of results: ", result.length);
+        if (!activeBoardId) {
+          if (result.length > 0) {
+            setActiveBoardId(result[0].id);
+            setActiveBoard(result[0]);
+          } else {
+            setActiveBoardId(null);
+            setActiveBoard(undefined);
+          }
+        }
       }
     };
 
     fetchData();
-  }, []);
+  }, [activeBoardId]);
 
-  useEffect(() => {});
+  useEffect(() => {
+    console.log("activeBoard has changed: ==> ", activeBoard);
+  }, [activeBoard]);
 
   return (
     <AppShell
@@ -167,6 +213,7 @@ const App = () => {
       allBoards={allBoards}
       activeBoardId={activeBoardId}
       changeActiveBoard={handleChangeActiveBoard}
+      activeBoardTitle={activeBoard ? activeBoard.name : ""}
     >
       {viewTaskModal && (
         <ViewTaskModal
@@ -188,20 +235,22 @@ const App = () => {
           deleteBoard={handleDeleteBoard}
         />
       )}
-      {dummyData.colData ? (
+      {activeBoard && activeBoard.cols ? (
         <div className={styles.mainContainer}>
-          {dummyData.colData.map((col) => (
+          {activeBoard.cols.map((col) => (
             <Column
               openModal={handleToggleViewTaskModal}
-              key={col.colId}
-              colId={col.colId}
-              colName={col.colName}
-              colColor={col.colColor}
-              colItems={col.colItems}
+              key={col.id}
+              colName={col.name}
+              colColor={col.color}
+              colItems={col.tickets}
             />
           ))}
           <div className={styles.newColContainer}>
-            <button className={`${styles.newColBtn} heading-xl`}>
+            <button
+              className={`${styles.newColBtn} heading-xl`}
+              onClick={handleCreateNewCol}
+            >
               + New Column
             </button>
           </div>
@@ -211,7 +260,11 @@ const App = () => {
           <p className={`${styles.noColsText} heading-lg`}>
             This board is empty. Createa a new column to get started.
           </p>
-          <button className={`${styles.noColsBtn} heading-md`}>
+          <button
+            className={`${styles.noColsBtn} heading-md`}
+            onClick={handleCreateNewCol}
+            disabled={!activeBoardId}
+          >
             + Add New Column
           </button>
         </div>

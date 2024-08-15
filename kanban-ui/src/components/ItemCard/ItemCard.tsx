@@ -1,11 +1,12 @@
+import { Subtask } from "../../types";
 import styles from "./ItemCard.module.css";
 
 interface ItemCardProps {
-  itemId: string;
+  itemId: number;
   itemName: string;
-  itemSubtask: number;
+  itemSubtask: Subtask[];
   itemCompleteTasks: number;
-  onClick: (id: string) => void;
+  onClick: (id: number) => void;
 }
 
 const ItemCard = ({
@@ -23,7 +24,7 @@ const ItemCard = ({
     >
       <h3 className={`${styles.title} heading-md`}>{itemName}</h3>
       <div className={styles.tasks}>
-        {itemCompleteTasks} of {itemSubtask} subtasks
+        {itemCompleteTasks} of {itemSubtask.length} subtasks
       </div>
     </button>
   );

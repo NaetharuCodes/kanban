@@ -1,21 +1,19 @@
-import { ColItem } from "../../types";
+import { Ticket } from "../../types";
 import ColorPip from "../ColorPip/ColorPip";
 import ItemCard from "../ItemCard/ItemCard";
 import styles from "./Column.module.css";
 
 interface ColumnProps {
-  colId: string;
   colName: string;
   colColor: string;
-  colItems: ColItem[];
-  openModal: (id: string) => void;
+  colItems: Ticket[];
+  openModal: (id: number) => void;
 }
 
 const Column = ({
-  colId,
   colName,
   colColor,
-  colItems,
+  colItems = [],
   openModal,
 }: ColumnProps) => {
   return (
@@ -28,12 +26,14 @@ const Column = ({
       <div className={styles.cardContainer}>
         {colItems.map((item) => (
           <ItemCard
-            key={item.itemId}
-            itemId={item.itemId}
-            itemName={item.itemName}
-            itemSubtask={item.itemSubtasks}
-            itemCompleteTasks={item.itemSubtasksComplete}
-            onClick={(id: string) => openModal(id)}
+            key={item.id}
+            itemId={item.id}
+            itemName={item.title}
+            itemSubtask={item.subtasks}
+            itemCompleteTasks={
+              item.subtasks.filter((task) => task.status === true).length
+            }
+            onClick={(id: number) => openModal(id)}
           />
         ))}
       </div>

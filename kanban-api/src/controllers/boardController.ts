@@ -6,7 +6,9 @@ const prisma = new PrismaClient();
 export const getAllBoards = async (req: Request, res: Response) => {
   console.log("all boards controller");
   try {
-    const allBoards = await prisma.board.findMany();
+    const allBoards = await prisma.board.findMany({
+      include: { cols: true },
+    });
     console.log(allBoards);
     res.json(allBoards);
   } catch (error) {
@@ -39,6 +41,13 @@ export const updateBoard = (req: Request, res: Response) => {
 export const deleteBoard = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
+
+    await prisma.col.deleteMany({
+      where: {
+        boardId: parseInt(id),
+      },
+    });
+
     const deletedBoard = await prisma.board.delete({
       where: {
         id: parseInt(id),

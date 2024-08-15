@@ -36,6 +36,16 @@ export const updateBoard = (req: Request, res: Response) => {
   res.send("update an exisitng board");
 };
 
-export const deleteBoard = (req: Request, res: Response) => {
-  res.send("delete a board");
+export const deleteBoard = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+    const deletedBoard = await prisma.board.delete({
+      where: {
+        id: parseInt(id),
+      },
+    });
+    res.status(200).json(deletedBoard);
+  } catch (error) {
+    res.status(500).json({ error: "unabled to delete board" });
+  }
 };

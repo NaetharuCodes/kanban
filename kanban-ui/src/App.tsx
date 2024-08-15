@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import ViewTaskModal from "./components/ViewTaskModal/ViewTaskModal";
 import CreateBoardModal from "./components/CreateBoardModal/CreateBoardModal";
 import { Board } from "./types";
+import DeleteBoardModal from "./components/DeleteBoardModal/DeleteBoardModal";
 
 export type TaskModalType = {
   id: string;
@@ -35,6 +36,7 @@ function findItemById(data: any, targetId: string) {
 const App = () => {
   const [viewBoardModal, setViewBoardModal] = useState<boolean>(false);
   const [viewTaskModal, setViewtaskModal] = useState<boolean>(false);
+  const [viewDeleteModal, setViewDeleteModal] = useState<boolean>(false);
   const [taskId, setTaskId] = useState<string | undefined>("");
   const [taskModalData, setTaskModalData] = useState<undefined | TaskModalType>(
     undefined
@@ -65,7 +67,6 @@ const App = () => {
         throw new Error("Error in the response");
       } else {
         const newBoard = await response.json();
-        console.log("newBoard", newBoard);
         allBoards
           ? setAllBoards([...allBoards, newBoard])
           : setAllBoards(newBoard);
@@ -73,10 +74,30 @@ const App = () => {
         setActiveBoard(newBoard);
       }
     } catch (error) {
-      console.log("inside the catch", error);
+      console.error("inside the catch", error);
     }
 
     handleToggleBoardModal();
+  };
+
+  const handleDeleteBoard = async () => {
+    try {
+      const url = `http://localhost:3000/api/boards/${activeBoardId}`;
+      const response = await fetch(url, {
+        method: "DELETE",
+      });
+      if (!response.ok) {
+        throw new Error(
+          `Error trying to delete board with id ${activeBoardId}`
+        );
+      } else {
+        setAllBoards(allBoards!.filter((entry) => entry.id !== activeBoardId));
+        setActiveBoard(allBoards ? allBoards[0] : null);
+        handleToggleDeleteModal();
+      }
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const handleToggleViewTaskModal = (id?: string) => {
@@ -86,6 +107,10 @@ const App = () => {
 
   const handleToggleBoardModal = () => {
     setViewBoardModal(!viewBoardModal);
+  };
+
+  const handleToggleDeleteModal = () => {
+    setViewDeleteModal(!viewDeleteModal);
   };
 
   useEffect(() => {
@@ -126,7 +151,7 @@ const App = () => {
       const result = await getAllBoards();
       if (result) {
         setAllBoards(result);
-        setActiveBoardId(result[0].id);
+        setActiveBoardId(result.length > 0 ? result[0].id : null);
       }
     };
 
@@ -138,6 +163,7 @@ const App = () => {
   return (
     <AppShell
       toggleBoardModal={handleToggleBoardModal}
+      toggleDeleteModal={handleToggleDeleteModal}
       allBoards={allBoards}
       activeBoardId={activeBoardId}
       changeActiveBoard={handleChangeActiveBoard}
@@ -152,6 +178,14 @@ const App = () => {
         <CreateBoardModal
           toggleModal={handleToggleBoardModal}
           createNewBoard={handleCreateNewBoard}
+        />
+      )}
+      {viewDeleteModal && (
+        <DeleteBoardModal
+          toggleModal={handleToggleDeleteModal}
+          title={activeBoard?.name as string}
+          cancel={() => {}}
+          deleteBoard={handleDeleteBoard}
         />
       )}
       {dummyData.colData ? (

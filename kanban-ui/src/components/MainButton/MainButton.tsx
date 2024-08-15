@@ -11,7 +11,7 @@ interface MainButtonProps {
   onClick?: () => void;
   type: string;
   large?: boolean;
-  disabled: boolean;
+  disabled?: boolean;
 }
 
 const MainButton = ({

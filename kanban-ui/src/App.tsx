@@ -263,6 +263,7 @@ const App = () => {
           <button
             className={`${styles.noColsBtn} heading-md`}
             onClick={handleCreateNewCol}
+            disabled={!activeBoardId}
           >
             + Add New Column
           </button>

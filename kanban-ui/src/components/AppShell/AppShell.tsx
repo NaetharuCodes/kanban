@@ -12,6 +12,7 @@ interface AppShellProps {
   toggleBoardModal: () => void;
   allBoards: any;
   activeBoardId: number | null;
+  activeBoardTitle: string;
   changeActiveBoard: (id: number) => void;
   toggleDeleteModal: () => void;
 }
@@ -21,6 +22,7 @@ const AppShell = ({
   toggleBoardModal,
   allBoards,
   activeBoardId,
+  activeBoardTitle,
   changeActiveBoard,
   toggleDeleteModal,
 }: AppShellProps) => {
@@ -39,10 +41,10 @@ const AppShell = ({
             <h1 className={`${styles.brandText} heading-xl`}>kanban</h1>
           </div>
           <button className={`${styles.boardHeaderBtn} heading-lg`}>
-            Title of Current Board <ChevronArrow />
+            {activeBoardTitle} <ChevronArrow />
           </button>
           <h2 className={`${styles.boardHeaderTitle} heading-lg`}>
-            Title of Current Board
+            {activeBoardTitle}
           </h2>
         </div>
         <div className="flex-row">

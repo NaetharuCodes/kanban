@@ -1,5 +1,4 @@
 import AppShell from "./components/AppShell/AppShell";
-import dummyData from "./dummyData.json";
 import styles from "./App.module.css";
 import Column from "./components/Column/Column";
 import { useEffect, useState } from "react";
@@ -22,7 +21,7 @@ type SubTaskType = {
   complete: boolean;
 };
 
-function findItemById(data: any, targetId: string) {
+function findItemById(data: any, targetId: number) {
   for (const column of data.colData) {
     for (const item of column.colItems) {
       if (item.itemId === targetId) {
@@ -34,19 +33,40 @@ function findItemById(data: any, targetId: string) {
 }
 
 const App = () => {
+  // MODAL TOGGLES
+
   const [viewBoardModal, setViewBoardModal] = useState<boolean>(false);
   const [viewTaskModal, setViewtaskModal] = useState<boolean>(false);
   const [viewDeleteModal, setViewDeleteModal] = useState<boolean>(false);
-  const [taskId, setTaskId] = useState<string | undefined>("");
+
+  const handleToggleViewTaskModal = (id?: number) => {
+    setTaskId(id);
+    setViewtaskModal(!viewTaskModal);
+  };
+
+  const handleToggleBoardModal = () => {
+    setViewBoardModal(!viewBoardModal);
+  };
+
+  const handleToggleDeleteModal = () => {
+    setViewDeleteModal(!viewDeleteModal);
+  };
+
+  // MAIN STATE
+
+  const [taskId, setTaskId] = useState<number | undefined>(undefined);
   const [taskModalData, setTaskModalData] = useState<undefined | TaskModalType>(
     undefined
   );
   const [allBoards, setAllBoards] = useState<Board[]>();
   const [activeBoardId, setActiveBoardId] = useState<number | null>(null);
-  const [activeBoard, setActiveBoard] = useState<Board | null>();
+  const [activeBoard, setActiveBoard] = useState<Board | undefined>();
 
   const handleChangeActiveBoard = (id: number) => {
     setActiveBoardId(id);
+    setActiveBoard(
+      allBoards ? allBoards.find((board) => board.id === id) : undefined
+    );
   };
 
   const handleCreateNewBoard = async (
@@ -100,22 +120,13 @@ const App = () => {
     }
   };
 
-  const handleToggleViewTaskModal = (id?: string) => {
-    setTaskId(id);
-    setViewtaskModal(!viewTaskModal);
-  };
-
-  const handleToggleBoardModal = () => {
-    setViewBoardModal(!viewBoardModal);
-  };
-
-  const handleToggleDeleteModal = () => {
-    setViewDeleteModal(!viewDeleteModal);
+  const handleCreateNewCol = () => {
+    const url = "http://localhost:3000/api/cols";
   };
 
   useEffect(() => {
     if (taskId) {
-      const currentTask = findItemById(dummyData, taskId as string);
+      const currentTask = findItemById(activeBoard, taskId);
       console.log(currentTask);
 
       setTaskModalData({
@@ -151,14 +162,18 @@ const App = () => {
       const result = await getAllBoards();
       if (result) {
         setAllBoards(result);
+        console.log("length of results: ", result.length);
         setActiveBoardId(result.length > 0 ? result[0].id : null);
+        setActiveBoard(result.length > 0 ? result[0] : null);
       }
     };
 
     fetchData();
   }, []);
 
-  useEffect(() => {});
+  useEffect(() => {
+    console.log("activeBoard has changed: ==> ", activeBoard);
+  }, [activeBoard]);
 
   return (
     <AppShell
@@ -167,6 +182,7 @@ const App = () => {
       allBoards={allBoards}
       activeBoardId={activeBoardId}
       changeActiveBoard={handleChangeActiveBoard}
+      activeBoardTitle={activeBoard ? activeBoard.name : ""}
     >
       {viewTaskModal && (
         <ViewTaskModal
@@ -188,16 +204,15 @@ const App = () => {
           deleteBoard={handleDeleteBoard}
         />
       )}
-      {dummyData.colData ? (
+      {activeBoard && activeBoard.cols ? (
         <div className={styles.mainContainer}>
-          {dummyData.colData.map((col) => (
+          {activeBoard.cols.map((col) => (
             <Column
               openModal={handleToggleViewTaskModal}
-              key={col.colId}
-              colId={col.colId}
-              colName={col.colName}
-              colColor={col.colColor}
-              colItems={col.colItems}
+              key={col.id}
+              colName={col.name}
+              colColor={col.color}
+              colItems={col.tickets}
             />
           ))}
           <div className={styles.newColContainer}>

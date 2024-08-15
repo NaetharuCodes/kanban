@@ -111,8 +111,7 @@ const App = () => {
           `Error trying to delete board with id ${activeBoardId}`
         );
       } else {
-        setAllBoards(allBoards!.filter((entry) => entry.id !== activeBoardId));
-        setActiveBoard(allBoards ? allBoards[0] : undefined);
+        setActiveBoardId(null);
         handleToggleDeleteModal();
       }
     } catch (error) {
@@ -188,13 +187,20 @@ const App = () => {
       if (result) {
         setAllBoards(result);
         console.log("length of results: ", result.length);
-        setActiveBoardId(result.length > 0 ? result[0].id : null);
-        setActiveBoard(result.length > 0 ? result[0] : null);
+        if (!activeBoardId) {
+          if (result.length > 0) {
+            setActiveBoardId(result[0].id);
+            setActiveBoard(result[0]);
+          } else {
+            setActiveBoardId(null);
+            setActiveBoard(undefined);
+          }
+        }
       }
     };
 
     fetchData();
-  }, []);
+  }, [activeBoardId]);
 
   useEffect(() => {
     console.log("activeBoard has changed: ==> ", activeBoard);

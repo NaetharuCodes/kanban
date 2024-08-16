@@ -2,6 +2,7 @@ import { useState } from "react";
 import Modal from "../Modal/Modal";
 import TextField from "../TextField/TextField";
 import styles from "./NewColModal.module.css";
+import MainButton from "../MainButton/MainButton";
 
 interface NewColModalProps {
   toggleModal: () => void;
@@ -27,7 +28,7 @@ const NewColModal = ({ toggleModal, createNewCol }: NewColModalProps) => {
         action="submit"
         onSubmit={(e: React.FormEvent) => createNewCol(e, text, color)}
       >
-        <h2 className={styles.header}>Create A New Column</h2>
+        <h2 className={`${styles.header} heading-lg`}>Create A New Column</h2>
         <TextField
           placeholder="name"
           value={text}
@@ -39,9 +40,7 @@ const NewColModal = ({ toggleModal, createNewCol }: NewColModalProps) => {
           value={color}
           onChange={handleChangeColor}
         />
-        <button className={styles.button} type="submit" disabled={!text}>
-          Submit
-        </button>
+        <MainButton text="Submit" type="primary" disabled={!text} />
       </form>
     </Modal>
   );

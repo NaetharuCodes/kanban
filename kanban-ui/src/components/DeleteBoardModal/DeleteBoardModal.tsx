@@ -17,14 +17,24 @@ const DeleteBoardModal = ({
 }: DeleteBoardModalProps) => {
   return (
     <Modal toggleModal={toggleModal}>
-      <h2 className={styles.title}>Delete this board?</h2>
-      <p className={styles.text}>
+      <h2 className="heading-lg">Delete this board?</h2>
+      <p className="text-lg">
         Are you sure you want to delete the {title} board? This action will
         remove all columns and tasks, and cannot be reversed.
       </p>
       <div className={styles.buttonContainer}>
-        <MainButton type="destructive" text="Delete" onClick={deleteBoard} />
-        <MainButton type="secondary" text="Cancel" onClick={cancel} />
+        <MainButton
+          type="destructive"
+          text="Delete"
+          onClick={deleteBoard}
+          style={{ flexGrow: 1 }}
+        />
+        <MainButton
+          type="secondary"
+          text="Cancel"
+          onClick={cancel}
+          style={{ flexGrow: 1 }}
+        />
       </div>
     </Modal>
   );

@@ -1,0 +1,33 @@
+.topContainer {
+  width: 100%;
+  flex-grow: 1;
+}
+
+.bottomContainer {
+  width: 100%;
+}
+
+.boardsNumber {
+  padding: 20px 24px;
+  font-weight: bold;
+  color: rgba(var(--blue-gray), 1);
+}
+
+:global(body.dark-mode) .boardsNumber {
+  color: rgba(var(--blue-gray), 1);
+}
+
+.createNewButton {
+  padding: 20px 24px;
+  background-color: white;
+  border: none;
+  color: rgba(var(--purple), 1);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+:global(body.dark-mode) .createNewButton {
+  background-color: rgba(var(--dark-gray), 1);
+  color: rgba(var(--purple), 1);
+}

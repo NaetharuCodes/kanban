@@ -23,6 +23,10 @@
   gap: 24px;
 }
 
+:global(body.dark-mode) .modal {
+  background-color: rgba(var(--mid-gray), 0.6);
+}
+
 @media screen and (min-width: 680px) {
   .modal {
     width: 480px;

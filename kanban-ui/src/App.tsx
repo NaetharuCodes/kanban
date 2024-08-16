@@ -125,7 +125,12 @@ const App = () => {
     }
   };
 
-  const handleCreateNewCol = async (name: string, color: string) => {
+  const handleCreateNewCol = async (
+    e: React.FormEvent,
+    name: string,
+    color: string
+  ) => {
+    e.preventDefault();
     const url = "http://localhost:3000/api/cols";
     const response = await fetch(url, {
       method: "POST",
@@ -142,8 +147,6 @@ const App = () => {
       throw new Error("Error in the col response");
     } else {
       const newCol = await response.json();
-
-      console.log("newCol", newCol);
       if (activeBoard) {
         const updatedBoard = {
           ...activeBoard,
@@ -152,6 +155,7 @@ const App = () => {
         setActiveBoard(updatedBoard);
       }
     }
+    handleToggleColModal();
   };
 
   useEffect(() => {

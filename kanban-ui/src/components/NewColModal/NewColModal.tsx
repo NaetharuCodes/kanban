@@ -5,7 +5,7 @@ import styles from "./NewColModal.module.css";
 
 interface NewColModalProps {
   toggleModal: () => void;
-  createNewCol: (name: string, color: string) => void;
+  createNewCol: (e: React.FormEvent, name: string, color: string) => void;
 }
 
 const NewColModal = ({ toggleModal, createNewCol }: NewColModalProps) => {
@@ -25,7 +25,7 @@ const NewColModal = ({ toggleModal, createNewCol }: NewColModalProps) => {
       <form
         className={styles.form}
         action="submit"
-        onSubmit={() => createNewCol(text, color)}
+        onSubmit={(e: React.FormEvent) => createNewCol(e, text, color)}
       >
         <h2 className={styles.header}>Create A New Column</h2>
         <TextField

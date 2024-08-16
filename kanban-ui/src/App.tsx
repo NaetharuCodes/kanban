@@ -6,6 +6,7 @@ import ViewTaskModal from "./components/ViewTaskModal/ViewTaskModal";
 import CreateBoardModal from "./components/CreateBoardModal/CreateBoardModal";
 import { Board } from "./types";
 import DeleteBoardModal from "./components/DeleteBoardModal/DeleteBoardModal";
+import NewColModal from "./components/NewColModal/NewColModal";
 
 export type TaskModalType = {
   id: string;
@@ -38,6 +39,7 @@ const App = () => {
   const [viewBoardModal, setViewBoardModal] = useState<boolean>(false);
   const [viewTaskModal, setViewtaskModal] = useState<boolean>(false);
   const [viewDeleteModal, setViewDeleteModal] = useState<boolean>(false);
+  const [viewColModal, setViewColModal] = useState<boolean>(false);
 
   const handleToggleViewTaskModal = (id?: number) => {
     setTaskId(id);
@@ -50,6 +52,10 @@ const App = () => {
 
   const handleToggleDeleteModal = () => {
     setViewDeleteModal(!viewDeleteModal);
+  };
+
+  const handleToggleColModal = () => {
+    setViewColModal(!viewColModal);
   };
 
   // MAIN STATE
@@ -119,7 +125,7 @@ const App = () => {
     }
   };
 
-  const handleCreateNewCol = async () => {
+  const handleCreateNewCol = async (name: string, color: string) => {
     const url = "http://localhost:3000/api/cols";
     const response = await fetch(url, {
       method: "POST",
@@ -128,8 +134,8 @@ const App = () => {
       },
       body: JSON.stringify({
         boardId: activeBoardId,
-        name: "New Col",
-        color: "#123321",
+        name: name,
+        color: color,
       }),
     });
     if (!response.ok) {
@@ -235,7 +241,13 @@ const App = () => {
           deleteBoard={handleDeleteBoard}
         />
       )}
-      {activeBoard && activeBoard.cols ? (
+      {viewColModal && (
+        <NewColModal
+          toggleModal={handleToggleColModal}
+          createNewCol={handleCreateNewCol}
+        />
+      )}
+      {activeBoard && activeBoard.cols.length > 0 ? (
         <div className={styles.mainContainer}>
           {activeBoard.cols.map((col) => (
             <Column
@@ -249,7 +261,7 @@ const App = () => {
           <div className={styles.newColContainer}>
             <button
               className={`${styles.newColBtn} heading-xl`}
-              onClick={handleCreateNewCol}
+              onClick={handleToggleColModal}
             >
               + New Column
             </button>
@@ -262,7 +274,7 @@ const App = () => {
           </p>
           <button
             className={`${styles.noColsBtn} heading-md`}
-            onClick={handleCreateNewCol}
+            onClick={handleToggleColModal}
             disabled={!activeBoardId}
           >
             + Add New Column

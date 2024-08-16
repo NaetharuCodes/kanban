@@ -3,3 +3,19 @@
   flex-direction: column;
   gap: 16px;
 }
+
+.header {
+  margin-bottom: 16px;
+}
+
+.colorPicker {
+  background-color: white;
+  height: 40px;
+  width: 100%;
+  border: none;
+  outline: none;
+}
+
+:global(body.dark-mode) .colorPicker {
+  background-color: rgba(var(--charcoal), 0.6);
+}

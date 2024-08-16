@@ -7,6 +7,7 @@ import CreateBoardModal from "./components/CreateBoardModal/CreateBoardModal";
 import { Board } from "./types";
 import DeleteBoardModal from "./components/DeleteBoardModal/DeleteBoardModal";
 import NewColModal from "./components/NewColModal/NewColModal";
+import SideBarModal from "./components/SideBarModal/SideBarModal";
 
 export type TaskModalType = {
   id: string;
@@ -40,6 +41,7 @@ const App = () => {
   const [viewTaskModal, setViewtaskModal] = useState<boolean>(false);
   const [viewDeleteModal, setViewDeleteModal] = useState<boolean>(false);
   const [viewColModal, setViewColModal] = useState<boolean>(false);
+  const [viewSidebarModal, setViewSidebarModal] = useState<boolean>(true);
 
   const handleToggleViewTaskModal = (id?: number) => {
     setTaskId(id);
@@ -48,6 +50,7 @@ const App = () => {
 
   const handleToggleBoardModal = () => {
     setViewBoardModal(!viewBoardModal);
+    setViewSidebarModal(false);
   };
 
   const handleToggleDeleteModal = () => {
@@ -56,6 +59,10 @@ const App = () => {
 
   const handleToggleColModal = () => {
     setViewColModal(!viewColModal);
+  };
+
+  const handleToggleSidebarModal = () => {
+    setViewSidebarModal(!viewSidebarModal);
   };
 
   // MAIN STATE
@@ -125,7 +132,12 @@ const App = () => {
     }
   };
 
-  const handleCreateNewCol = async (name: string, color: string) => {
+  const handleCreateNewCol = async (
+    e: React.FormEvent,
+    name: string,
+    color: string
+  ) => {
+    e.preventDefault();
     const url = "http://localhost:3000/api/cols";
     const response = await fetch(url, {
       method: "POST",
@@ -142,8 +154,6 @@ const App = () => {
       throw new Error("Error in the col response");
     } else {
       const newCol = await response.json();
-
-      console.log("newCol", newCol);
       if (activeBoard) {
         const updatedBoard = {
           ...activeBoard,
@@ -152,6 +162,7 @@ const App = () => {
         setActiveBoard(updatedBoard);
       }
     }
+    handleToggleColModal();
   };
 
   useEffect(() => {
@@ -247,7 +258,16 @@ const App = () => {
           createNewCol={handleCreateNewCol}
         />
       )}
-      {activeBoard && activeBoard.cols.length > 0 ? (
+      {viewSidebarModal && (
+        <SideBarModal
+          toggleModal={handleToggleSidebarModal}
+          toggleBoardModal={handleToggleBoardModal}
+          allBoards={allBoards}
+          activeBoardId={activeBoardId}
+          changeActiveBoard={handleChangeActiveBoard}
+        />
+      )}
+      {activeBoard?.cols && activeBoard.cols.length > 0 ? (
         <div className={styles.mainContainer}>
           {activeBoard.cols.map((col) => (
             <Column

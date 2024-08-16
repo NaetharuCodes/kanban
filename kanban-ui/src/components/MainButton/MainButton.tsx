@@ -12,6 +12,7 @@ interface MainButtonProps {
   type: string;
   large?: boolean;
   disabled?: boolean;
+  style?: React.CSSProperties;
 }
 
 const MainButton = ({
@@ -20,9 +21,11 @@ const MainButton = ({
   type,
   large,
   disabled,
+  style,
 }: MainButtonProps) => {
   return (
     <button
+      style={style}
       className={`${styles.button} ${
         type === Buttons.Primary
           ? styles.primary

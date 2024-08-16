@@ -21,14 +21,14 @@ const CreateBoardModal = ({
 
   return (
     <Modal toggleModal={toggleModal}>
-      <h2 className={styles.header}>Add New Board</h2>
+      <h2 className="heading-lg">Add New Board</h2>
       <form
         action="submit"
         onSubmit={(e: React.FormEvent) => createNewBoard(e, name)}
+        className={styles.form}
       >
         <TextField
-          label="name"
-          placeholder="e.g. Web Design"
+          placeholder="New board name..."
           value={name}
           onChange={handleNameChange}
         />

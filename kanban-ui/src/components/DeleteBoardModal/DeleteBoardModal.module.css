@@ -1,6 +1,11 @@
 .buttonContainer {
   display: flex;
+  flex-direction: column;
   width: 100%;
   justify-content: space-evenly;
   gap: 12px;
+}
+
+.heading {
+  color: rgba(var(--red), 1);
 }

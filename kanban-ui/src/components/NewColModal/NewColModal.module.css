@@ -17,5 +17,5 @@
 }
 
 :global(body.dark-mode) .colorPicker {
-  background-color: rgba(var(--charcoal), 0.6);
+  background-color: rgba(var(--charcoal), 1);
 }

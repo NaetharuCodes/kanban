@@ -4,21 +4,26 @@ import TextField from "../TextField/TextField";
 import styles from "./CreateTaskModal.module.css";
 import CrossIcon from "../Icons/CrossIcon";
 import MainButton from "../MainButton/MainButton";
-import DropDown from "../DownDown/DropDown";
 
-interface FormData {
+export interface FormData {
   name: string;
   text: string;
   subtasks: string[];
-  status: string;
 }
 
-const CreateTaskModal = () => {
+interface CreateTaskModalProps {
+  toggleModal: () => void;
+  handleCreateNewTask: (e: React.FormEvent, formData: FormData) => void;
+}
+
+const CreateTaskModal = ({
+  toggleModal,
+  handleCreateNewTask,
+}: CreateTaskModalProps) => {
   const [formData, setFormData] = useState<FormData>({
     name: "",
     text: "",
     subtasks: [],
-    status: "",
   });
 
   const handleUpdateForm = (
@@ -29,13 +34,11 @@ const CreateTaskModal = () => {
   };
 
   return (
-    <Modal toggleModal={() => {}}>
+    <Modal toggleModal={toggleModal}>
       <form
         className={styles.form}
         action="submit"
-        onSubmit={(e: React.FormEvent) => {
-          e.preventDefault();
-        }}
+        onSubmit={(e: React.FormEvent) => handleCreateNewTask(e, formData)}
       >
         <h2 className="heading-lg">Create New task</h2>
         <TextField
@@ -85,7 +88,6 @@ const CreateTaskModal = () => {
             }
           />
         </div>
-        <DropDown values={["one", "two"]} value={"one"} setValue={() => {}} />
         <MainButton buttonType="submit" type="primary" text="Save Changes" />
       </form>
     </Modal>

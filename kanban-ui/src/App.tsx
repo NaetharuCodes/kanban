@@ -176,6 +176,15 @@ const App = () => {
     handleToggleColModal();
   };
 
+  const handleCreateNewTask = async (
+    e: React.FormEvent,
+    formData: FormData
+  ) => {
+    e.preventDefault();
+    handleToggleCreateTaskModal();
+    console.log("creating a task", formData);
+  };
+
   useEffect(() => {
     if (taskId) {
       const currentTask = findItemById(activeBoard, taskId);
@@ -239,6 +248,7 @@ const App = () => {
       toggleBoardModal={handleToggleBoardModal}
       toggleDeleteModal={handleToggleDeleteModal}
       toggleSidebarModal={handleToggleSidebarModal}
+      toggleCreateTaskModal={handleToggleCreateTaskModal}
       allBoards={allBoards}
       activeBoardId={activeBoardId}
       changeActiveBoard={handleChangeActiveBoard}
@@ -279,7 +289,12 @@ const App = () => {
           changeActiveBoard={handleChangeActiveBoard}
         />
       )}
-      {viewCreateTaskModal && <CreateTaskModal />}
+      {viewCreateTaskModal && (
+        <CreateTaskModal
+          toggleModal={handleToggleCreateTaskModal}
+          handleCreateNewTask={handleCreateNewTask}
+        />
+      )}
       {activeBoard?.cols && activeBoard.cols.length > 0 ? (
         <div className={styles.mainContainer}>
           {activeBoard.cols.map((col) => (

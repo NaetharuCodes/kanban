@@ -8,6 +8,7 @@ import { Board } from "./types";
 import DeleteBoardModal from "./components/DeleteBoardModal/DeleteBoardModal";
 import NewColModal from "./components/NewColModal/NewColModal";
 import SideBarModal from "./components/SideBarModal/SideBarModal";
+import CreateTaskModal from "./components/CreateTaskModal/CreateTaskModal";
 
 export type TaskModalType = {
   id: string;
@@ -42,6 +43,7 @@ const App = () => {
   const [viewDeleteModal, setViewDeleteModal] = useState<boolean>(false);
   const [viewColModal, setViewColModal] = useState<boolean>(false);
   const [viewSidebarModal, setViewSidebarModal] = useState<boolean>(false);
+  const [viewCreateTaskModal, setViewCreateTaskModal] = useState<boolean>(true);
 
   const handleToggleViewTaskModal = (id?: number) => {
     setTaskId(id);
@@ -63,6 +65,10 @@ const App = () => {
 
   const handleToggleSidebarModal = () => {
     setViewSidebarModal(!viewSidebarModal);
+  };
+
+  const handleToggleCreateTaskModal = () => {
+    setViewCreateTaskModal(!viewCreateTaskModal);
   };
 
   // MAIN STATE
@@ -273,6 +279,7 @@ const App = () => {
           changeActiveBoard={handleChangeActiveBoard}
         />
       )}
+      {viewCreateTaskModal && <CreateTaskModal />}
       {activeBoard?.cols && activeBoard.cols.length > 0 ? (
         <div className={styles.mainContainer}>
           {activeBoard.cols.map((col) => (

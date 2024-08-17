@@ -153,13 +153,18 @@ const App = () => {
     if (!response.ok) {
       throw new Error("Error in the col response");
     } else {
-      const newCol = await response.json();
-      if (activeBoard) {
-        const updatedBoard = {
-          ...activeBoard,
-          cols: activeBoard!.cols ? [...activeBoard?.cols, newCol] : [response],
-        };
-        setActiveBoard(updatedBoard);
+      const url = `http://localhost:3000/api/boards/${activeBoardId}`;
+      const response = await fetch(url, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      if (!response.ok) {
+        throw new Error("Error getting cols");
+      } else {
+        const newBoard = await response.json();
+        setActiveBoard(newBoard);
       }
     }
     handleToggleColModal();

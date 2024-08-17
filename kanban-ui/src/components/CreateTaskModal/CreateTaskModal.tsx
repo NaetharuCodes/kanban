@@ -9,21 +9,25 @@ export interface FormData {
   name: string;
   text: string;
   subtasks: string[];
+  colId: number | null;
 }
 
 interface CreateTaskModalProps {
   toggleModal: () => void;
   handleCreateNewTask: (e: React.FormEvent, formData: FormData) => void;
+  colZeroId: number | null;
 }
 
 const CreateTaskModal = ({
   toggleModal,
   handleCreateNewTask,
+  colZeroId,
 }: CreateTaskModalProps) => {
   const [formData, setFormData] = useState<FormData>({
     name: "",
     text: "",
     subtasks: [],
+    colId: colZeroId,
   });
 
   const handleUpdateForm = (
@@ -88,7 +92,12 @@ const CreateTaskModal = ({
             }
           />
         </div>
-        <MainButton buttonType="submit" type="primary" text="Save Changes" />
+        <MainButton
+          buttonType="submit"
+          type="primary"
+          text="Save Changes"
+          disabled={!formData.colId || !formData.name}
+        />
       </form>
     </Modal>
   );

@@ -9,6 +9,7 @@ import DeleteBoardModal from "./components/DeleteBoardModal/DeleteBoardModal";
 import NewColModal from "./components/NewColModal/NewColModal";
 import SideBarModal from "./components/SideBarModal/SideBarModal";
 import CreateTaskModal from "./components/CreateTaskModal/CreateTaskModal";
+import { FormData } from "./components/CreateTaskModal/CreateTaskModal";
 
 export type TaskModalType = {
   id: string;
@@ -182,7 +183,29 @@ const App = () => {
   ) => {
     e.preventDefault();
     handleToggleCreateTaskModal();
-    console.log("creating a task", formData);
+    try {
+      const url = "http://localhost:3000/api/tickets";
+      const response = await fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          text: formData.text,
+          colId: formData.colId,
+        }),
+      });
+      if (!response.ok) {
+        throw new Error("Error creating new ticket");
+      } else {
+        const newTicket = await response.json();
+        console.log(newTicket);
+      }
+      console.log(response);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   useEffect(() => {
@@ -293,6 +316,7 @@ const App = () => {
         <CreateTaskModal
           toggleModal={handleToggleCreateTaskModal}
           handleCreateNewTask={handleCreateNewTask}
+          colZeroId={activeBoard ? activeBoard.cols[0].id : null}
         />
       )}
       {activeBoard?.cols && activeBoard.cols.length > 0 ? (

@@ -41,7 +41,7 @@ const App = () => {
   const [viewTaskModal, setViewtaskModal] = useState<boolean>(false);
   const [viewDeleteModal, setViewDeleteModal] = useState<boolean>(false);
   const [viewColModal, setViewColModal] = useState<boolean>(false);
-  const [viewSidebarModal, setViewSidebarModal] = useState<boolean>(true);
+  const [viewSidebarModal, setViewSidebarModal] = useState<boolean>(false);
 
   const handleToggleViewTaskModal = (id?: number) => {
     setTaskId(id);
@@ -227,6 +227,7 @@ const App = () => {
     <AppShell
       toggleBoardModal={handleToggleBoardModal}
       toggleDeleteModal={handleToggleDeleteModal}
+      toggleSidebarModal={handleToggleSidebarModal}
       allBoards={allBoards}
       activeBoardId={activeBoardId}
       changeActiveBoard={handleChangeActiveBoard}

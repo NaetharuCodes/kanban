@@ -9,12 +9,13 @@ import SideBar from "./SideBar";
 interface AppShellProps {
   children: React.ReactNode;
   sideBar?: boolean;
-  toggleBoardModal: () => void;
   allBoards: any;
   activeBoardId: number | null;
   activeBoardTitle: string;
   changeActiveBoard: (id: number) => void;
   toggleDeleteModal: () => void;
+  toggleBoardModal: () => void;
+  toggleSidebarModal: () => void;
 }
 
 const AppShell = ({
@@ -25,6 +26,7 @@ const AppShell = ({
   activeBoardTitle,
   changeActiveBoard,
   toggleDeleteModal,
+  toggleSidebarModal,
 }: AppShellProps) => {
   const [showSidebar, setShowSidebar] = useState<boolean>(true);
 
@@ -40,7 +42,10 @@ const AppShell = ({
             <BrandIcon />
             <h1 className={`${styles.brandText} heading-xl`}>kanban</h1>
           </div>
-          <button className={`${styles.boardHeaderBtn} heading-lg`}>
+          <button
+            className={`${styles.boardHeaderBtn} heading-lg`}
+            onClick={toggleSidebarModal}
+          >
             {activeBoardTitle} <ChevronArrow />
           </button>
           <h2 className={`${styles.boardHeaderTitle} heading-lg`}>

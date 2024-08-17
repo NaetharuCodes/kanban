@@ -19,10 +19,10 @@ const NewBoardContent = ({
 }: NewBoardContentProps) => {
   return (
     <>
+      <div className={`${styles.boardsNumber} heading-sm`}>{`All BOARDS (${
+        allBoards ? allBoards.length : 0
+      })`}</div>
       <div className={styles.topContainer}>
-        <div className={`${styles.boardsNumber} heading-sm`}>{`All BOARDS (${
-          allBoards ? allBoards.length : 0
-        })`}</div>
         {allBoards &&
           allBoards.map((board: { id: number; name: string }) => (
             <SideBarTab
@@ -33,6 +33,8 @@ const NewBoardContent = ({
               active={board.id === activeBoardId}
             />
           ))}
+      </div>
+      <div className={styles.buttonContainer}>
         <button
           onClick={toggleNewBoardModal}
           className={`${styles.createNewButton} heading-md`}

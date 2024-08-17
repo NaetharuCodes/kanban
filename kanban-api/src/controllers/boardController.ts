@@ -4,20 +4,33 @@ import { Request, Response } from "express";
 const prisma = new PrismaClient();
 
 export const getAllBoards = async (req: Request, res: Response) => {
-  console.log("all boards controller");
   try {
     const allBoards = await prisma.board.findMany({
       include: { cols: true },
     });
-    console.log(allBoards);
     res.json(allBoards);
   } catch (error) {
     res.status(500).json({ error: "Failed to get all boards" });
   }
 };
 
-export const getBoard = (req: Request, res: Response) => {
-  res.send("get specific board by id");
+export const getBoard = async (req: Request, res: Response) => {
+  const { id } = req.params;
+  try {
+    const board = await prisma.board.findFirst({
+      where: {
+        id: parseInt(id),
+      },
+      include: {
+        cols: true,
+      },
+    });
+
+    console.log("inside the get board route", board);
+    res.status(200).json(board);
+  } catch (error) {
+    res.status(500).json({ error: `Failed to find board with id ${id}` });
+  }
 };
 
 export const createBoard = async (req: Request, res: Response) => {

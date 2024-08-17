@@ -1,6 +1,6 @@
 .topContainer {
   width: 100%;
-  flex-grow: 1;
+  overflow-y: auto;
 }
 
 .bottomContainer {
@@ -15,6 +15,13 @@
 
 :global(body.dark-mode) .boardsNumber {
   color: rgba(var(--blue-gray), 1);
+}
+
+.buttonContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  flex-grow: 1;
 }
 
 .createNewButton {

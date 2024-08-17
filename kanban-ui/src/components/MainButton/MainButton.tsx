@@ -13,6 +13,7 @@ interface MainButtonProps {
   large?: boolean;
   disabled?: boolean;
   style?: React.CSSProperties;
+  buttonType: "button" | "submit" | "reset";
 }
 
 const MainButton = ({
@@ -22,9 +23,11 @@ const MainButton = ({
   large,
   disabled,
   style,
+  buttonType,
 }: MainButtonProps) => {
   return (
     <button
+      type={buttonType}
       style={style}
       className={`${styles.button} ${
         type === Buttons.Primary

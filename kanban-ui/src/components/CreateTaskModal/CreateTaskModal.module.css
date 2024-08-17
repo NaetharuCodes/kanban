@@ -1,0 +1,42 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  overflow-y: auto;
+}
+
+.subTaskContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.subTaskInput {
+  display: flex;
+  flex-direction: row;
+  gap: 6px;
+}
+
+.subTaskInput input {
+  flex-grow: 1;
+  border: 1px solid rgba(var(--blue-gray), 0.25);
+  padding: 8px 16px;
+  border-radius: 4px;
+}
+
+.subTaskCancel {
+  background-color: transparent;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.textArea {
+  height: 112px;
+  min-height: 112px;
+  resize: none;
+  border: 1px solid rgba(var(--blue-gray), 0.25);
+  padding: 8px 16px;
+  border-radius: 4px;
+}

@@ -8,6 +8,7 @@ import { Board } from "./types";
 import DeleteBoardModal from "./components/DeleteBoardModal/DeleteBoardModal";
 import NewColModal from "./components/NewColModal/NewColModal";
 import SideBarModal from "./components/SideBarModal/SideBarModal";
+import CreateTaskModal from "./components/CreateTaskModal/CreateTaskModal";
 
 export type TaskModalType = {
   id: string;
@@ -42,6 +43,7 @@ const App = () => {
   const [viewDeleteModal, setViewDeleteModal] = useState<boolean>(false);
   const [viewColModal, setViewColModal] = useState<boolean>(false);
   const [viewSidebarModal, setViewSidebarModal] = useState<boolean>(false);
+  const [viewCreateTaskModal, setViewCreateTaskModal] = useState<boolean>(true);
 
   const handleToggleViewTaskModal = (id?: number) => {
     setTaskId(id);
@@ -63,6 +65,10 @@ const App = () => {
 
   const handleToggleSidebarModal = () => {
     setViewSidebarModal(!viewSidebarModal);
+  };
+
+  const handleToggleCreateTaskModal = () => {
+    setViewCreateTaskModal(!viewCreateTaskModal);
   };
 
   // MAIN STATE
@@ -170,6 +176,15 @@ const App = () => {
     handleToggleColModal();
   };
 
+  const handleCreateNewTask = async (
+    e: React.FormEvent,
+    formData: FormData
+  ) => {
+    e.preventDefault();
+    handleToggleCreateTaskModal();
+    console.log("creating a task", formData);
+  };
+
   useEffect(() => {
     if (taskId) {
       const currentTask = findItemById(activeBoard, taskId);
@@ -233,6 +248,7 @@ const App = () => {
       toggleBoardModal={handleToggleBoardModal}
       toggleDeleteModal={handleToggleDeleteModal}
       toggleSidebarModal={handleToggleSidebarModal}
+      toggleCreateTaskModal={handleToggleCreateTaskModal}
       allBoards={allBoards}
       activeBoardId={activeBoardId}
       changeActiveBoard={handleChangeActiveBoard}
@@ -271,6 +287,12 @@ const App = () => {
           allBoards={allBoards}
           activeBoardId={activeBoardId}
           changeActiveBoard={handleChangeActiveBoard}
+        />
+      )}
+      {viewCreateTaskModal && (
+        <CreateTaskModal
+          toggleModal={handleToggleCreateTaskModal}
+          handleCreateNewTask={handleCreateNewTask}
         />
       )}
       {activeBoard?.cols && activeBoard.cols.length > 0 ? (

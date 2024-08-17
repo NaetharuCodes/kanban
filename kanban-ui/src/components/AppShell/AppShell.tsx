@@ -16,6 +16,7 @@ interface AppShellProps {
   toggleDeleteModal: () => void;
   toggleBoardModal: () => void;
   toggleSidebarModal: () => void;
+  toggleCreateTaskModal: () => void;
 }
 
 const AppShell = ({
@@ -27,6 +28,7 @@ const AppShell = ({
   changeActiveBoard,
   toggleDeleteModal,
   toggleSidebarModal,
+  toggleCreateTaskModal,
 }: AppShellProps) => {
   const [showSidebar, setShowSidebar] = useState<boolean>(true);
 
@@ -53,10 +55,13 @@ const AppShell = ({
           </h2>
         </div>
         <div className="flex-row">
-          <button className={styles.button}>
+          <button className={styles.button} onClick={toggleCreateTaskModal}>
             <PlusIcon />
           </button>
-          <button className={`${styles.buttonText} heading-md`}>
+          <button
+            className={`${styles.buttonText} heading-md`}
+            onClick={toggleCreateTaskModal}
+          >
             + Add New Task
           </button>
           <button className={styles.pipButton} onClick={toggleDeleteModal}>

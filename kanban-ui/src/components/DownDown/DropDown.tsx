@@ -18,6 +18,7 @@ const DropDown = ({ values, value, setValue }: DropDownProps) => {
   return (
     <div className={styles.container}>
       <button
+        type="button"
         className={`${styles.button} ${
           showOptions && styles.buttonOpen
         } text-lg `}

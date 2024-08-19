@@ -10,6 +10,9 @@ export const getCols = async (req: Request, res: Response) => {
       where: {
         boardId: boardId,
       },
+      include: {
+        tickets: true,
+      },
     });
     res.status(200).json(boardCols);
   } catch (error) {

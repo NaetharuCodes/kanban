@@ -6,7 +6,13 @@ const prisma = new PrismaClient();
 export const getAllBoards = async (req: Request, res: Response) => {
   try {
     const allBoards = await prisma.board.findMany({
-      include: { cols: true },
+      include: {
+        cols: {
+          include: {
+            tickets: true,
+          },
+        },
+      },
     });
     res.json(allBoards);
   } catch (error) {
@@ -22,7 +28,11 @@ export const getBoard = async (req: Request, res: Response) => {
         id: parseInt(id),
       },
       include: {
-        cols: true,
+        cols: {
+          include: {
+            tickets: true,
+          },
+        },
       },
     });
 

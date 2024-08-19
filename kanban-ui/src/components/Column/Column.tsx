@@ -29,9 +29,10 @@ const Column = ({
             key={item.id}
             itemId={item.id}
             itemName={item.title}
-            itemSubtask={item.subtasks}
+            itemSubtask={[]}
             itemCompleteTasks={
-              item.subtasks.filter((task) => task.status === true).length
+              0
+              // item.subtasks.filter((task) => task.status === true).length
             }
             onClick={(id: number) => openModal(id)}
           />

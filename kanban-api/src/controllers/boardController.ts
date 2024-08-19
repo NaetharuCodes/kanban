@@ -65,6 +65,23 @@ export const deleteBoard = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
 
+    const colIds = await prisma.col.findMany({
+      where: {
+        boardId: parseInt(id),
+      },
+    });
+
+    colIds.forEach((column) => {
+      const deleteColTickets = async () => {
+        await prisma.ticket.deleteMany({
+          where: {
+            colId: column.id,
+          },
+        });
+      };
+      deleteColTickets();
+    });
+
     await prisma.col.deleteMany({
       where: {
         boardId: parseInt(id),

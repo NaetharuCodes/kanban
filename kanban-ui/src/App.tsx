@@ -25,17 +25,6 @@ type SubTaskType = {
   complete: boolean;
 };
 
-function findItemById(data: any, targetId: number) {
-  for (const column of data.colData) {
-    for (const item of column.colItems) {
-      if (item.itemId === targetId) {
-        return item;
-      }
-    }
-  }
-  return null;
-}
-
 const App = () => {
   // MODAL TOGGLES
 

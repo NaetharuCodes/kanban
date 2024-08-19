@@ -1,42 +1,27 @@
-import { TaskModalType } from "../../App";
-import CheckBox from "../CheckBox/CheckBox";
+import { Col, Ticket } from "../../types";
 import DropDown from "../DownDown/DropDown";
 import Modal from "../Modal/Modal";
 import styles from "./ViewTaskModal.module.css";
 
 interface ViewTaskModalProps {
   toggleModal: () => void;
-  taskData: TaskModalType | undefined;
+  ticket: Ticket | undefined;
+  cols: Col[];
 }
 
-const ViewTaskModal = ({ toggleModal, taskData }: ViewTaskModalProps) => {
-  console.log("TASK DATA: ", taskData);
+const ViewTaskModal = ({ toggleModal, ticket, cols }: ViewTaskModalProps) => {
+  console.log(ticket);
 
   return (
     <Modal toggleModal={toggleModal}>
-      {taskData && (
+      {ticket && (
         <>
-          <h2 className={`${styles.heading} heading-lg`}>{taskData.title}</h2>
-          <p className={`${styles.description} text-lg`}>
-            {taskData.description}
-          </p>
-          <div className={styles.subTaskContainer}>
-            <div className={styles.subTaskLabel}>
-              Subtasks ({taskData.completeTasks} of {taskData.openTasks})
-            </div>
-            {taskData.subTasks.map((subtask) => (
-              <CheckBox
-                key={subtask.description}
-                label={subtask.description}
-                checked={subtask.complete}
-                onChange={() => {}}
-              />
-            ))}
-          </div>
+          <h2 className={`${styles.heading} heading-lg`}>{ticket.title}</h2>
+          <p className={`${styles.description} text-lg`}>{ticket.text}</p>
           <div>
             <div className={styles.dropDownLabel}>Current Status</div>
             <DropDown
-              values={["Doing", "Done"]}
+              values={cols.map((col) => col.name)}
               value="Doing"
               setValue={() => {}}
             />

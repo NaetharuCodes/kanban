@@ -7,7 +7,7 @@ interface ColumnProps {
   colName: string;
   colColor: string;
   colItems: Ticket[];
-  openModal: (id: number) => void;
+  openModal: (taskId: number, colId: number) => void;
 }
 
 const Column = ({
@@ -34,7 +34,7 @@ const Column = ({
               0
               // item.subtasks.filter((task) => task.status === true).length
             }
-            onClick={(id: number) => openModal(id)}
+            onClick={(taskId: number) => openModal(taskId, item.colId)}
           />
         ))}
       </div>

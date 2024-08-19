@@ -4,7 +4,7 @@ import Column from "./components/Column/Column";
 import { useEffect, useState } from "react";
 import ViewTaskModal from "./components/ViewTaskModal/ViewTaskModal";
 import CreateBoardModal from "./components/CreateBoardModal/CreateBoardModal";
-import { Board } from "./types";
+import { Board, Ticket } from "./types";
 import DeleteBoardModal from "./components/DeleteBoardModal/DeleteBoardModal";
 import NewColModal from "./components/NewColModal/NewColModal";
 import SideBarModal from "./components/SideBarModal/SideBarModal";
@@ -36,8 +36,9 @@ const App = () => {
   const [viewCreateTaskModal, setViewCreateTaskModal] =
     useState<boolean>(false);
 
-  const handleToggleViewTaskModal = (id?: number) => {
-    setTaskId(id);
+  const handleToggleViewTaskModal = (taskId?: number, colId?: number) => {
+    setTaskId(taskId);
+    setColId(colId);
     setViewtaskModal(!viewTaskModal);
   };
 
@@ -65,9 +66,7 @@ const App = () => {
   // MAIN STATE
 
   const [taskId, setTaskId] = useState<number | undefined>(undefined);
-  const [taskModalData, setTaskModalData] = useState<undefined | TaskModalType>(
-    undefined
-  );
+  const [colId, setColId] = useState<number | undefined>(undefined);
   const [allBoards, setAllBoards] = useState<Board[]>();
   const [activeBoardId, setActiveBoardId] = useState<number | null>(null);
   const [activeBoard, setActiveBoard] = useState<Board | undefined>();
@@ -242,21 +241,6 @@ const App = () => {
   };
 
   useEffect(() => {
-    if (taskId) {
-      const currentTask = findItemById(activeBoard, taskId);
-
-      setTaskModalData({
-        id: currentTask.itemId,
-        title: currentTask.itemName,
-        description: currentTask.description,
-        openTasks: currentTask.itemSubtasks,
-        completeTasks: currentTask.itemSubtasksComplete,
-        subTasks: currentTask.subTasks,
-      });
-    }
-  }, [taskId]);
-
-  useEffect(() => {
     getAllBoards();
   }, [activeBoardId]);
 
@@ -271,10 +255,13 @@ const App = () => {
       changeActiveBoard={handleChangeActiveBoard}
       activeBoardTitle={activeBoard ? activeBoard.name : ""}
     >
-      {viewTaskModal && (
+      {viewTaskModal && activeBoard && (
         <ViewTaskModal
           toggleModal={handleToggleViewTaskModal}
-          taskData={taskModalData}
+          ticket={activeBoard.cols
+            .find((col) => col.id === colId)
+            ?.tickets.find((ticket: Ticket) => ticket.id === taskId)}
+          cols={activeBoard.cols}
         />
       )}
       {viewBoardModal && (

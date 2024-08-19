@@ -20,6 +20,21 @@ export const getCols = async (req: Request, res: Response) => {
   }
 };
 
+export const getColById = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+
+    const colById = await prisma.col.findFirst({
+      where: {
+        id: parseInt(id),
+      },
+    });
+    res.status(200).json(colById);
+  } catch (error) {
+    res.status(500).json({ error: "failed to get col by id" });
+  }
+};
+
 export const createCol = async (req: Request, res: Response) => {
   try {
     const { boardId, name, color } = req.body;

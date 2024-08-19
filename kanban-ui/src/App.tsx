@@ -44,7 +44,8 @@ const App = () => {
   const [viewDeleteModal, setViewDeleteModal] = useState<boolean>(false);
   const [viewColModal, setViewColModal] = useState<boolean>(false);
   const [viewSidebarModal, setViewSidebarModal] = useState<boolean>(false);
-  const [viewCreateTaskModal, setViewCreateTaskModal] = useState<boolean>(true);
+  const [viewCreateTaskModal, setViewCreateTaskModal] =
+    useState<boolean>(false);
 
   const handleToggleViewTaskModal = (id?: number) => {
     setTaskId(id);
@@ -81,6 +82,63 @@ const App = () => {
   const [allBoards, setAllBoards] = useState<Board[]>();
   const [activeBoardId, setActiveBoardId] = useState<number | null>(null);
   const [activeBoard, setActiveBoard] = useState<Board | undefined>();
+
+  const getAllBoards = () => {
+    const getAllBoardData = async () => {
+      try {
+        const url = "http://localhost:3000/api/boards";
+        const response = await fetch(url, {
+          method: "GET",
+        });
+        if (!response.ok) {
+          throw new Error("Error in the response");
+        }
+        const data = await response.json();
+        return data;
+      } catch (error) {
+        console.error("Error fetching boards:", error);
+        return null;
+      }
+    };
+
+    const fetchData = async () => {
+      const result = await getAllBoardData();
+      if (result) {
+        setAllBoards(result);
+        if (!activeBoardId) {
+          if (result.length > 0) {
+            setActiveBoardId(result[0].id);
+            setActiveBoard(result[0]);
+          } else {
+            setActiveBoardId(null);
+            setActiveBoard(undefined);
+          }
+        }
+      }
+    };
+
+    fetchData();
+  };
+
+  const getActiveBoard = async () => {
+    try {
+      const url = `http://localhost:3000/api/boards/${activeBoardId}`;
+      const response = await fetch(url, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      if (!response.ok) {
+        throw new Error("Error getting cols");
+      } else {
+        const newBoard = await response.json();
+        setActiveBoard(newBoard);
+      }
+    } catch (error) {
+      console.error("error");
+    }
+  };
 
   const handleChangeActiveBoard = (id: number) => {
     setActiveBoardId(id);
@@ -160,19 +218,7 @@ const App = () => {
     if (!response.ok) {
       throw new Error("Error in the col response");
     } else {
-      const url = `http://localhost:3000/api/boards/${activeBoardId}`;
-      const response = await fetch(url, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      if (!response.ok) {
-        throw new Error("Error getting cols");
-      } else {
-        const newBoard = await response.json();
-        setActiveBoard(newBoard);
-      }
+      getActiveBoard();
     }
     handleToggleColModal();
   };
@@ -199,10 +245,8 @@ const App = () => {
       if (!response.ok) {
         throw new Error("Error creating new ticket");
       } else {
-        const newTicket = await response.json();
-        console.log(newTicket);
+        getActiveBoard();
       }
-      console.log(response);
     } catch (error) {
       console.error(error);
     }
@@ -211,7 +255,6 @@ const App = () => {
   useEffect(() => {
     if (taskId) {
       const currentTask = findItemById(activeBoard, taskId);
-      console.log(currentTask);
 
       setTaskModalData({
         id: currentTask.itemId,
@@ -225,46 +268,8 @@ const App = () => {
   }, [taskId]);
 
   useEffect(() => {
-    const getAllBoards = async () => {
-      try {
-        const url = "http://localhost:3000/api/boards";
-        const response = await fetch(url, {
-          method: "GET",
-        });
-        if (!response.ok) {
-          throw new Error("Error in the response");
-        }
-        const data = await response.json();
-        return data;
-      } catch (error) {
-        console.error("Error fetching boards:", error);
-        return null;
-      }
-    };
-
-    const fetchData = async () => {
-      const result = await getAllBoards();
-      if (result) {
-        setAllBoards(result);
-        console.log("length of results: ", result.length);
-        if (!activeBoardId) {
-          if (result.length > 0) {
-            setActiveBoardId(result[0].id);
-            setActiveBoard(result[0]);
-          } else {
-            setActiveBoardId(null);
-            setActiveBoard(undefined);
-          }
-        }
-      }
-    };
-
-    fetchData();
+    getAllBoards();
   }, [activeBoardId]);
-
-  useEffect(() => {
-    console.log("activeBoard has changed: ==> ", activeBoard);
-  }, [activeBoard]);
 
   return (
     <AppShell

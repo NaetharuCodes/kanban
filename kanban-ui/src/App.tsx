@@ -10,6 +10,7 @@ import NewColModal from "./components/NewColModal/NewColModal";
 import SideBarModal from "./components/SideBarModal/SideBarModal";
 import CreateTaskModal from "./components/CreateTaskModal/CreateTaskModal";
 import { FormData } from "./components/CreateTaskModal/CreateTaskModal";
+import { act } from "react-dom/test-utils";
 
 export type TaskModalType = {
   id: string;
@@ -44,7 +45,7 @@ const App = () => {
   const [viewDeleteModal, setViewDeleteModal] = useState<boolean>(false);
   const [viewColModal, setViewColModal] = useState<boolean>(false);
   const [viewSidebarModal, setViewSidebarModal] = useState<boolean>(false);
-  const [viewCreateTaskModal, setViewCreateTaskModal] = useState<boolean>(true);
+  const [viewCreateTaskModal, setViewCreateTaskModal] = useState<boolean>(false);
 
   const handleToggleViewTaskModal = (id?: number) => {
     setTaskId(id);
@@ -200,9 +201,31 @@ const App = () => {
         throw new Error("Error creating new ticket");
       } else {
         const newTicket = await response.json();
-        console.log(newTicket);
+
+
+        setActiveBoard(prevBoard => {
+
+          // handle cases where board is set to null / undefined
+          if (!prevBoard) {
+            return prevBoard
+          }
+
+          // merge ticket in with the active board
+          return {
+            ...prevBoard,
+            cols: prevBoard.cols.map((col) => {
+              if (col.id === formData.colId) {
+                return {
+                  ...col,
+                  tickets: [...col.tickets, newTicket]
+                }
+              }
+              return col;
+            })
+          }
+        })
       }
-      console.log(response);
+
     } catch (error) {
       console.error(error);
     }

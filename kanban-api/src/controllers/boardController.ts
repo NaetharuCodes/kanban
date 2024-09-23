@@ -65,6 +65,23 @@ export const deleteBoard = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
 
+    // For each col in this board
+    // Delete all tickst with that colid
+
+    const targetCols = await prisma.col.findMany({
+      where: {
+        boardId: parseInt(id)
+      }
+    })
+
+    targetCols.forEach(async col => {
+      await prisma.ticket.deleteMany({
+        where: {
+          colId: col.id
+        }
+      })
+    })
+
     await prisma.col.deleteMany({
       where: {
         boardId: parseInt(id),
@@ -76,6 +93,7 @@ export const deleteBoard = async (req: Request, res: Response) => {
         id: parseInt(id),
       },
     });
+
     res.status(200).json(deletedBoard);
   } catch (error) {
     res.status(500).json({ error: "unabled to delete board" });

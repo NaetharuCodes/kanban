@@ -24,12 +24,14 @@ const DeleteBoardModal = ({
       </p>
       <div className={styles.buttonContainer}>
         <MainButton
+          buttonType="button"
           type="destructive"
           text="Delete"
           onClick={deleteBoard}
           style={{ flexGrow: 1 }}
         />
         <MainButton
+          buttonType="button"
           type="secondary"
           text="Cancel"
           onClick={cancel}

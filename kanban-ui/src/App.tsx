@@ -4,38 +4,12 @@ import Column from "./components/Column/Column";
 import { useEffect, useState } from "react";
 import ViewTaskModal from "./components/ViewTaskModal/ViewTaskModal";
 import CreateBoardModal from "./components/CreateBoardModal/CreateBoardModal";
-import { Board } from "./types";
+import { Board, Ticket } from "./types";
 import DeleteBoardModal from "./components/DeleteBoardModal/DeleteBoardModal";
 import NewColModal from "./components/NewColModal/NewColModal";
 import SideBarModal from "./components/SideBarModal/SideBarModal";
 import CreateTaskModal from "./components/CreateTaskModal/CreateTaskModal";
 import { FormData } from "./components/CreateTaskModal/CreateTaskModal";
-import { act } from "react-dom/test-utils";
-
-export type TaskModalType = {
-  id: string;
-  title: string;
-  description: string;
-  openTasks: number;
-  completeTasks: number;
-  subTasks: SubTaskType[];
-};
-
-type SubTaskType = {
-  description: string;
-  complete: boolean;
-};
-
-function findItemById(data: any, targetId: number) {
-  for (const column of data.colData) {
-    for (const item of column.colItems) {
-      if (item.itemId === targetId) {
-        return item;
-      }
-    }
-  }
-  return null;
-}
 
 const App = () => {
   // MODAL TOGGLES
@@ -75,8 +49,8 @@ const App = () => {
 
   // MAIN STATE
 
-  const [taskId, setTaskId] = useState<number | undefined>(undefined);
-  const [taskModalData, setTaskModalData] = useState<undefined | TaskModalType>(
+  const [taskId, setTaskId] = useState<number | undefined>(8);
+  const [taskModalData, setTaskModalData] = useState<Ticket | undefined>(
     undefined
   );
   const [allBoards, setAllBoards] = useState<Board[]>();
@@ -233,17 +207,7 @@ const App = () => {
 
   useEffect(() => {
     if (taskId) {
-      const currentTask = findItemById(activeBoard, taskId);
-      console.log(currentTask);
-
-      setTaskModalData({
-        id: currentTask.itemId,
-        title: currentTask.itemName,
-        description: currentTask.description,
-        openTasks: currentTask.itemSubtasks,
-        completeTasks: currentTask.itemSubtasksComplete,
-        subTasks: currentTask.subTasks,
-      });
+      console.log(taskId);
     }
   }, [taskId]);
 
@@ -303,7 +267,7 @@ const App = () => {
       {viewTaskModal && (
         <ViewTaskModal
           toggleModal={handleToggleViewTaskModal}
-          taskData={taskModalData}
+          ticketId={taskId}
         />
       )}
       {viewBoardModal && (

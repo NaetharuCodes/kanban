@@ -4,7 +4,21 @@ import { Request, Response } from "express";
 const prisma = new PrismaClient();
 
 export const getTicketByID = async (req: Request, res: Response) => {
-  res.json("Get ticket by id");
+  const {id} = req.params;
+
+  console.log("id: ", id);
+
+  try {
+    const ticket = await prisma.ticket.findFirst({
+      where: {
+        id: parseInt(id)
+      }
+    })
+    res.json(ticket);
+  }
+  catch (error) {
+    res.status(500).json({error: "Failed to get ticket by id"})
+  }
 };
 
 export const createTicket = async (req: Request, res: Response) => {

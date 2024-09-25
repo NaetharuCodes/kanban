@@ -4,7 +4,7 @@ import styles from "./DropDown.module.css";
 
 interface DropDownProps {
   values: string[];
-  value: string;
+  value: string | undefined;
   setValue: (value: string) => void;
 }
 

@@ -22,8 +22,6 @@ const App = () => {
   });
 
   const toggleModal = useCallback((modalName: keyof typeof modalVisibility) => {
-    console.log('modal: ', modalName)
-    console.log('modal: ', modalVisibility[modalName])
     setModalVisibility(prev => ({...prev, [modalName]: !prev[modalName]}))
   }, [])
 
@@ -242,6 +240,8 @@ const App = () => {
         <ViewTaskModal
           toggleModal={toggleViewTaskModal}
           ticketId={ticketId}
+          cols={activeBoard?.cols}
+          setActiveBoard={setActiveBoard}
         />
       )}
       {modalVisibility.viewBoard && (

@@ -4,7 +4,7 @@ import Column from "./components/Column/Column";
 import { useCallback, useEffect, useState } from "react";
 import ViewTaskModal from "./components/ViewTaskModal/ViewTaskModal";
 import CreateBoardModal from "./components/CreateBoardModal/CreateBoardModal";
-import { Board, Ticket } from "./types";
+import { Board } from "./types";
 import DeleteBoardModal from "./components/DeleteBoardModal/DeleteBoardModal";
 import NewColModal from "./components/NewColModal/NewColModal";
 import SideBarModal from "./components/SideBarModal/SideBarModal";
@@ -15,7 +15,6 @@ const App = () => {
   // MODAL TOGGLES
   const [modalVisibility, setModalVisibility] = useState({
     viewBoard: false,
-    viewTask: false,
     viewDelete: false,
     viewCol: false,
     viewSidebar: false,
@@ -28,10 +27,14 @@ const App = () => {
     setModalVisibility(prev => ({...prev, [modalName]: !prev[modalName]}))
   }, [])
 
-  const [taskId, setTaskId] = useState<number | undefined>(8);
-  const [taskModalData, setTaskModalData] = useState<Ticket | undefined>(
-    undefined
-  );
+  const [viewTask, setViewTask] = useState(false);
+  const [ticketId, setTicketId] = useState<number | null>(null);
+
+  const toggleViewTaskModal = (id?: number) => {
+    setTicketId(id ? id : null);
+    setViewTask(!viewTask);
+  }
+
   const [allBoards, setAllBoards] = useState<Board[]>();
   const [activeBoardId, setActiveBoardId] = useState<number | null>(null);
   const [activeBoard, setActiveBoard] = useState<Board | undefined>();
@@ -185,12 +188,6 @@ const App = () => {
   };
 
   useEffect(() => {
-    if (taskId) {
-      console.log(taskId);
-    }
-  }, [taskId]);
-
-  useEffect(() => {
     const getAllBoards = async () => {
       try {
         const url = "http://localhost:3000/api/boards";
@@ -241,10 +238,10 @@ const App = () => {
       changeActiveBoard={handleChangeActiveBoard}
       activeBoardTitle={activeBoard ? activeBoard.name : ""}
     >
-      {modalVisibility.viewTask && (
+      {viewTask && (
         <ViewTaskModal
-          toggleModal={() => toggleModal('viewTask')}
-          ticketId={taskId}
+          toggleModal={toggleViewTaskModal}
+          ticketId={ticketId}
         />
       )}
       {modalVisibility.viewBoard && (
@@ -290,7 +287,7 @@ const App = () => {
         <div className={styles.mainContainer}>
           {activeBoard.cols.map((col) => (
             <Column
-              openModal={() => toggleModal('viewTask')}
+              openModal={toggleViewTaskModal}
               key={col.id}
               colName={col.name}
               colColor={col.color}

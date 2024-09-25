@@ -14,6 +14,8 @@ export const getTicketByID = async (req: Request, res: Response) => {
         id: parseInt(id)
       }
     })
+
+    console.log("TICKET IS: ", ticket)
     res.json(ticket);
   }
   catch (error) {

@@ -7,7 +7,7 @@ import styles from "./ViewTaskModal.module.css";
 
 interface ViewTaskModalProps {
   toggleModal: () => void;
-  ticketId: number | undefined;
+  ticketId: number | null;
 }
 
 const ViewTaskModal = ({ toggleModal, ticketId }: ViewTaskModalProps) => {
@@ -32,6 +32,7 @@ const ViewTaskModal = ({ toggleModal, ticketId }: ViewTaskModalProps) => {
           throw new Error("Error in the response");
         }
         const data = await response.json();
+        console.log("Data: ", data);
         setTicketData(data)
       } catch (error) {
         console.error("Error fetching ticket data for modal", error);

@@ -16,6 +16,9 @@ const ItemCard = ({
   itemCompleteTasks,
   onClick,
 }: ItemCardProps) => {
+
+  console.log("The id of this ticket is: ", itemId)
+
   return (
     <button
       className={styles.container}

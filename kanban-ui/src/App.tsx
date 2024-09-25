@@ -1,7 +1,7 @@
 import AppShell from "./components/AppShell/AppShell";
 import styles from "./App.module.css";
 import Column from "./components/Column/Column";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import ViewTaskModal from "./components/ViewTaskModal/ViewTaskModal";
 import CreateBoardModal from "./components/CreateBoardModal/CreateBoardModal";
 import { Board, Ticket } from "./types";
@@ -13,41 +13,20 @@ import { FormData } from "./components/CreateTaskModal/CreateTaskModal";
 
 const App = () => {
   // MODAL TOGGLES
+  const [modalVisibility, setModalVisibility] = useState({
+    viewBoard: false,
+    viewTask: false,
+    viewDelete: false,
+    viewCol: false,
+    viewSidebar: false,
+    viewCreateTask: false,
+  });
 
-  const [viewBoardModal, setViewBoardModal] = useState<boolean>(false);
-  const [viewTaskModal, setViewtaskModal] = useState<boolean>(false);
-  const [viewDeleteModal, setViewDeleteModal] = useState<boolean>(false);
-  const [viewColModal, setViewColModal] = useState<boolean>(false);
-  const [viewSidebarModal, setViewSidebarModal] = useState<boolean>(false);
-  const [viewCreateTaskModal, setViewCreateTaskModal] = useState<boolean>(false);
-
-  const handleToggleViewTaskModal = (id?: number) => {
-    setTaskId(id);
-    setViewtaskModal(!viewTaskModal);
-  };
-
-  const handleToggleBoardModal = () => {
-    setViewBoardModal(!viewBoardModal);
-    setViewSidebarModal(false);
-  };
-
-  const handleToggleDeleteModal = () => {
-    setViewDeleteModal(!viewDeleteModal);
-  };
-
-  const handleToggleColModal = () => {
-    setViewColModal(!viewColModal);
-  };
-
-  const handleToggleSidebarModal = () => {
-    setViewSidebarModal(!viewSidebarModal);
-  };
-
-  const handleToggleCreateTaskModal = () => {
-    setViewCreateTaskModal(!viewCreateTaskModal);
-  };
-
-  // MAIN STATE
+  const toggleModal = useCallback((modalName: keyof typeof modalVisibility) => {
+    console.log('modal: ', modalName)
+    console.log('modal: ', modalVisibility[modalName])
+    setModalVisibility(prev => ({...prev, [modalName]: !prev[modalName]}))
+  }, [])
 
   const [taskId, setTaskId] = useState<number | undefined>(8);
   const [taskModalData, setTaskModalData] = useState<Ticket | undefined>(
@@ -92,7 +71,7 @@ const App = () => {
       console.error("inside the catch", error);
     }
 
-    handleToggleBoardModal();
+    toggleModal('viewBoard');
   };
 
   const handleDeleteBoard = async () => {
@@ -107,7 +86,7 @@ const App = () => {
         );
       } else {
         setActiveBoardId(null);
-        handleToggleDeleteModal();
+        toggleModal('viewDelete')
       }
     } catch (error) {
       console.error(error);
@@ -149,7 +128,7 @@ const App = () => {
         setActiveBoard(newBoard);
       }
     }
-    handleToggleColModal();
+    toggleModal('viewCol')
   };
 
   const handleCreateNewTask = async (
@@ -157,7 +136,7 @@ const App = () => {
     formData: FormData
   ) => {
     e.preventDefault();
-    handleToggleCreateTaskModal();
+    toggleModal('viewCreateTask')
     try {
       const url = "http://localhost:3000/api/tickets";
       const response = await fetch(url, {
@@ -249,59 +228,60 @@ const App = () => {
     fetchData();
   }, [activeBoardId]);
 
-  useEffect(() => {
-    console.log("activeBoard has changed: ==> ", activeBoard);
-  }, [activeBoard]);
-
   return (
     <AppShell
-      toggleBoardModal={handleToggleBoardModal}
-      toggleDeleteModal={handleToggleDeleteModal}
-      toggleSidebarModal={handleToggleSidebarModal}
-      toggleCreateTaskModal={handleToggleCreateTaskModal}
+      toggleBoardModal={() => toggleModal('viewBoard')}
+      toggleDeleteModal={() => toggleModal('viewDelete')}
+      toggleSidebarModal={() => toggleModal('viewSidebar')}
+      toggleCreateTaskModal={() =>{
+        console.log('tasks where are thou')
+        toggleModal('viewCreateTask')}}
       allBoards={allBoards}
       activeBoardId={activeBoardId}
       changeActiveBoard={handleChangeActiveBoard}
       activeBoardTitle={activeBoard ? activeBoard.name : ""}
     >
-      {viewTaskModal && (
+      {modalVisibility.viewTask && (
         <ViewTaskModal
-          toggleModal={handleToggleViewTaskModal}
+          toggleModal={() => toggleModal('viewTask')}
           ticketId={taskId}
         />
       )}
-      {viewBoardModal && (
+      {modalVisibility.viewBoard && (
         <CreateBoardModal
-          toggleModal={handleToggleBoardModal}
+          toggleModal={() => toggleModal('viewBoard')}
           createNewBoard={handleCreateNewBoard}
         />
       )}
-      {viewDeleteModal && (
+      {modalVisibility.viewDelete && (
         <DeleteBoardModal
-          toggleModal={handleToggleDeleteModal}
+          toggleModal={() => toggleModal('viewDelete')}
           title={activeBoard?.name as string}
           cancel={() => {}}
           deleteBoard={handleDeleteBoard}
         />
       )}
-      {viewColModal && (
+      {modalVisibility.viewCol && (
         <NewColModal
-          toggleModal={handleToggleColModal}
+          toggleModal={() => toggleModal('viewCol')}
           createNewCol={handleCreateNewCol}
         />
       )}
-      {viewSidebarModal && (
+      {modalVisibility.viewSidebar && (
         <SideBarModal
-          toggleModal={handleToggleSidebarModal}
-          toggleBoardModal={handleToggleBoardModal}
+          toggleModal={() => toggleModal('viewSidebar')}
+          toggleBoardModal={() => toggleModal('viewBoard')}
           allBoards={allBoards}
           activeBoardId={activeBoardId}
           changeActiveBoard={handleChangeActiveBoard}
         />
       )}
-      {viewCreateTaskModal && (
+      {modalVisibility.viewCreateTask && (
         <CreateTaskModal
-          toggleModal={handleToggleCreateTaskModal}
+          toggleModal={() => {
+    
+            toggleModal('viewCreateTask')}
+          }
           handleCreateNewTask={handleCreateNewTask}
           colZeroId={activeBoard ? activeBoard.cols[0].id : null}
         />
@@ -310,7 +290,7 @@ const App = () => {
         <div className={styles.mainContainer}>
           {activeBoard.cols.map((col) => (
             <Column
-              openModal={handleToggleViewTaskModal}
+              openModal={() => toggleModal('viewTask')}
               key={col.id}
               colName={col.name}
               colColor={col.color}
@@ -320,7 +300,7 @@ const App = () => {
           <div className={styles.newColContainer}>
             <button
               className={`${styles.newColBtn} heading-xl`}
-              onClick={handleToggleColModal}
+              onClick={() => toggleModal('viewCol')}
             >
               + New Column
             </button>
@@ -333,7 +313,7 @@ const App = () => {
           </p>
           <button
             className={`${styles.noColsBtn} heading-md`}
-            onClick={handleToggleColModal}
+            onClick={() => toggleModal('viewCol')}
             disabled={!activeBoardId}
           >
             + Add New Column

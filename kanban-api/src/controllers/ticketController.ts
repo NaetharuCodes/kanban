@@ -14,8 +14,6 @@ export const getTicketByID = async (req: Request, res: Response) => {
         id: parseInt(id)
       }
     })
-
-    console.log("TICKET IS: ", ticket)
     res.json(ticket);
   }
   catch (error) {
@@ -43,7 +41,25 @@ export const createTicket = async (req: Request, res: Response) => {
 };
 
 export const updateTicket = async (req: Request, res: Response) => {
-  res.json("Update a ticket");
+  const {id} = req.params;
+  const {targetColId} = req.body;
+
+  console.log(id);
+  console.log(targetColId);
+
+  try {
+    const updatedTicket = await prisma.ticket.update({
+      where: {
+        id: parseInt(id)
+      },
+      data: {
+        colId: targetColId
+      }
+    })
+    res.status(200).json(updatedTicket);
+  } catch (error) {
+    res.status(500).json({error: error});
+  }
 };
 
 export const deleteTicket = async (req: Request, res: Response) => {

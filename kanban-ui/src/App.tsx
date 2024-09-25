@@ -242,6 +242,7 @@ const App = () => {
         <ViewTaskModal
           toggleModal={toggleViewTaskModal}
           ticketId={ticketId}
+          cols={activeBoard?.cols}
         />
       )}
       {modalVisibility.viewBoard && (

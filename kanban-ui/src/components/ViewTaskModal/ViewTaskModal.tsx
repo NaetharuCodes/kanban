@@ -1,6 +1,6 @@
 
 import { useEffect, useState } from "react";
-import { Ticket } from "../../types";
+import { Col, Ticket } from "../../types";
 import DropDown from "../DownDown/DropDown";
 import Modal from "../Modal/Modal";
 import styles from "./ViewTaskModal.module.css";
@@ -8,23 +8,40 @@ import styles from "./ViewTaskModal.module.css";
 interface ViewTaskModalProps {
   toggleModal: () => void;
   ticketId: number | null;
+  cols: Col[] | undefined;
 }
 
-const ViewTaskModal = ({ toggleModal, ticketId }: ViewTaskModalProps) => {
+const ViewTaskModal = ({ toggleModal, ticketId, cols }: ViewTaskModalProps) => {
 
   const [ticketData, setTicketData] = useState<Ticket | undefined>(undefined);
 
+  const handleUpdateTicketStatus = async (id: number) => {
+    try {
+      const url = `http://localhost:3000/api/tickets/${ticketId}`
+      const response = await fetch(url, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          targetColId: id
+        }),
+      });
+      if (!response.ok) {
+        throw new Error("Error updating ticket status");
+      } else {
+        console.log('done')
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   useEffect(() => {
-
-    console.log("ticket id is: ", ticketId)
-
     const getTaskData = async () => {
-
       if (!ticketId) return;
-
       try {
         const url = `http://localhost:3000/api/tickets/${ticketId}`;
-
         const response = await fetch(url, {
           method: "GET",
         });
@@ -39,14 +56,10 @@ const ViewTaskModal = ({ toggleModal, ticketId }: ViewTaskModalProps) => {
         return null;
       }
     }
-
     getTaskData();
-  
   }, [ticketId])
 
-  useEffect(() => {
-    console.log("ticketData: ", ticketData)
-  }, [ticketData])
+  if (!cols) return;
 
   return (
     <Modal toggleModal={toggleModal}>
@@ -59,9 +72,9 @@ const ViewTaskModal = ({ toggleModal, ticketId }: ViewTaskModalProps) => {
           <div>
             <div className={styles.dropDownLabel}>Current Status</div>
             <DropDown
-              values={["Doing", "Done"]}
-              value="Doing"
-              setValue={() => {}}
+              values={cols?.map((col) => col.name)}
+              value={cols.find(col => ticketData.colId === col.id)?.name}
+              setValue={(option: string) => handleUpdateTicketStatus(cols.find(col => option === col.name)!.id)}
             />
           </div>
         </>
